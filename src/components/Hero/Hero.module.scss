@@ -1,0 +1,247 @@
+.hero {
+  overflow: hidden;
+  background: #eee8e1;
+}
+
+.content {
+  width: min(1320px, calc(100% - 48px));
+  position: relative;
+  min-height: 570px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 0.98fr) minmax(430px, 1.02fr);
+  align-items: center;
+  gap: clamp(24px, 4vw, 70px);
+}
+
+.copy {
+  position: relative;
+  z-index: 1;
+  max-width: 620px;
+  padding: 62px 0 150px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 18px;
+  padding: 9px 14px;
+  border-radius: 999px;
+  background: #e7f1ff;
+  color: #0f4ac5;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.eyebrow::before {
+  content: "✓";
+  margin-right: 8px;
+  display: grid;
+  width: 18px;
+  height: 18px;
+  place-items: center;
+  border-radius: 50%;
+  background: #0f4ac5;
+  color: white;
+  font-size: 0.7rem;
+}
+
+.copy h1 {
+  max-width: 600px;
+  color: #0b2855;
+  font-size: clamp(3rem, 5vw, 4.7rem);
+  line-height: 1.02;
+  letter-spacing: -0.055em;
+}
+
+.copy h1 span {
+  display: block;
+  color: #f5820b;
+}
+
+.description {
+  max-width: 530px;
+  margin: 22px 0 26px;
+  color: #4b5f7f;
+  font-size: clamp(1rem, 1.2vw, 1.2rem);
+  line-height: 1.6;
+}
+
+.search {
+  position: absolute;
+  z-index: 3;
+  right: 0;
+  bottom: 28px;
+  left: 0;
+  display: flex;
+  padding: 10px;
+  gap: 10px;
+  border: 1px solid rgba(15, 74, 197, 0.08);
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 16px 36px rgba(25, 67, 126, 0.14);
+}
+
+.selectControl,
+.searchButton {
+  min-height: 48px;
+  border: 0;
+  border-radius: 10px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.selectControl {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  flex: 1 1 0;
+  gap: 9px;
+  padding: 0 12px;
+  background: #fbfcff;
+  color: #233858;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.selectControl span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.selectControl svg {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: #15488e;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.selectControl svg:last-child {
+  width: 13px;
+  height: 13px;
+  margin-left: auto;
+}
+
+.searchButton {
+  flex: 0 0 auto;
+  padding: 0 24px;
+  background: linear-gradient(135deg, #ff9a0a, #f36d0b);
+  color: white;
+  font-weight: 700;
+  box-shadow: 0 8px 16px rgba(245, 130, 11, 0.2);
+}
+
+.benefits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 25px;
+  margin-top: 27px;
+  list-style: none;
+  color: #17345f;
+  font-size: 0.84rem;
+}
+
+.benefits li {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.check {
+  color: #0f4ac5;
+  font-weight: 800;
+}
+
+.visual {
+  position: relative;
+  align-self: stretch;
+  min-height: 570px;
+  margin-right: -48px;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, #eee8e1 0%, rgba(238, 232, 225, 0.72) 5%, rgba(238, 232, 225, 0.16) 15%, transparent 24%, transparent 88%, rgba(238, 232, 225, 0.9) 100%),
+    linear-gradient(180deg, #eee8e1 0%, rgba(238, 232, 225, 0.72) 8%, transparent 24%, transparent 88%, rgba(255, 255, 255, 0.4) 100%);
+}
+
+.heroImage {
+  position: absolute !important;
+  inset: 3% 0 0 !important;
+  width: 100% !important;
+  height: 97% !important;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(1.04);
+}
+
+@media (max-width: 900px) {
+  .content {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .copy {
+    max-width: none;
+    padding-bottom: 30px;
+  }
+
+  .visual {
+    min-height: 420px;
+    margin-right: 0;
+    margin-bottom: 110px;
+  }
+
+  .search {
+    bottom: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .content {
+    width: min(100% - 32px, 1320px);
+  }
+
+  .copy {
+    padding: 42px 0 20px;
+  }
+
+  .copy h1 {
+    font-size: clamp(2.5rem, 12vw, 4rem);
+  }
+
+  .search {
+    flex-direction: column;
+    bottom: 18px;
+  }
+
+  .selectControl,
+  .searchButton {
+    width: 100%;
+  }
+
+  .benefits {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .visual {
+    min-height: 310px;
+    margin-bottom: 170px;
+  }
+
+}

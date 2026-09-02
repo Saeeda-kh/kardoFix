@@ -1,0 +1,474 @@
+.header {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+  position: fixed;
+  top: 0;
+  z-index: 100;
+  isolation: isolate;
+}
+
+:global(body) {
+  padding-top: 80px;
+}
+
+.inner {
+  width: min(1320px, calc(100% - 48px));
+  margin: 0 auto;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(16px, 2.5vw, 36px);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 220px;
+  margin-left: -8px;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+.logo {
+  height: auto;
+  width: auto;
+  max-width: 100%;
+  display: block;
+  filter: drop-shadow(0 2px 8px rgba(15, 23, 42, 0.06));
+  transition: filter 0.3s ease;
+}
+
+.brand:hover .logo {
+  filter: drop-shadow(0 4px 16px rgba(15, 23, 42, 0.12));
+}
+
+.logoMark {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #153b8d 0%, #0f4ac5 100%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+.logoMark svg {
+  width: 18px;
+  height: 18px;
+  fill: white;
+}
+
+.brandText {
+  font-size: clamp(1.25rem, 1.1rem + 0.6vw, 2rem);
+  letter-spacing: -0.06em;
+}
+
+.nav {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  flex: 1 1 auto;
+  min-width: 0;
+  gap: 2px;
+  height: 80px;
+  overflow: hidden;
+}
+
+.menuToggle {
+  display: none;
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 12px;
+  background: #fff;
+  color: #0f4ac5;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.06);
+}
+
+.menuToggle span {
+  width: 17px;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
+.menuToggleOpen span:first-child {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.menuToggleOpen span:nth-child(2) {
+  opacity: 0;
+}
+
+.menuToggleOpen span:last-child {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.navLink {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 1 auto;
+  padding: 0.65rem clamp(0.55rem, 1vw, 1rem);
+  font-size: clamp(0.8rem, 0.2vw + 0.72rem, 0.95rem);
+  font-weight: 500;
+  color: #27314d;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  height: 100%;
+
+  &:hover {
+    color: #0f4ac5;
+    background: rgba(15, 74, 197, 0.05);
+    border-radius: 0;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.active {
+  color: #0f4ac5;
+  background: rgba(15, 74, 197, 0.08);
+  border-radius: 8px;
+  white-space: nowrap;
+
+  &:hover {
+    height: 100%;
+    background: rgba(15, 74, 197, 0.12);
+    border-radius: 0;
+    transform: none;
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.locationButton,
+.loginButton,
+.signupButton {
+  border: 0;
+  border-radius: 12px;
+  font: inherit;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.locationButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #f7f9fc;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  color: #1f2c4a;
+  padding: 0.7rem 0.9rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.locationButton svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.locationButton :global(svg:last-child) {
+  width: 12px;
+  height: 12px;
+  stroke-width: 2;
+}
+
+.loginButton {
+  background: transparent;
+  color: #0a163a;
+  padding: 0.8rem 1.25rem;
+  font-weight: 600;
+}
+
+.signupButton {
+  background: linear-gradient(135deg, #0d4ad7 0%, #0f3ba8 100%);
+  color: white;
+  padding: 0.85rem 1.4rem;
+  font-weight: 700;
+  box-shadow: 0 10px 20px rgba(32, 90, 221, 0.24);
+}
+
+.locationButton:hover,
+.loginButton:hover,
+.signupButton:hover {
+  transform: translateY(-1px);
+}
+
+@media (max-width: 1200px) {
+  .inner {
+    width: min(100% - 32px, 1320px);
+    gap: 16px;
+  }
+
+  .nav {
+    gap: 2px;
+  }
+
+  .navLink {
+    padding-inline: 0.6rem;
+    font-size: 0.84rem;
+  }
+}
+
+@media (max-width: 1080px) {
+  :global(body) {
+    padding-top: 132px;
+  }
+
+  .inner {
+    width: min(100% - 24px, 1320px);
+    min-height: 76px;
+    gap: 0 20px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .brand {
+    flex: 0 0 auto;
+    width: 200px;
+    margin-left: 0;
+    order: 1;
+  }
+
+  .logo,
+  .brand:hover .logo {
+    filter: none;
+  }
+
+  .nav {
+    flex: 0 0 100%;
+    width: 100%;
+    order: 2;
+    height: auto;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: center;
+    gap: 4px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(15, 23, 42, 0.06);
+  }
+
+  .navLink {
+    flex: 0 0 auto;
+    height: 48px;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.88rem;
+    border-radius: 10px;
+
+    &:hover {
+      height: 48px;
+      border-radius: 10px;
+    }
+  }
+
+  .actions {
+    flex: 0 0 auto;
+    order: 1;
+    gap: 12px;
+    margin-left: auto;
+  }
+
+  .locationButton {
+    display: inline-flex;
+  }
+}
+
+@media (max-width: 600px) {
+  :global(body) {
+    padding-top: 64px;
+  }
+
+  .inner {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    min-height: 64px;
+    padding: 10px 0;
+    gap: 10px;
+  }
+
+  .brand {
+    width: min(190px, calc(100% - 52px));
+    margin-right: auto;
+    order: 1;
+  }
+
+  .logo,
+  .brand:hover .logo {
+    filter: none;
+  }
+
+  .menuToggle {
+    display: inline-flex;
+    order: 2;
+  }
+
+  .nav {
+    display: flex;
+    flex: 0 0 100%;
+    order: 3;
+    height: auto;
+    max-height: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    padding: 0;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition: max-height 0.35s ease, padding 0.35s ease, opacity 0.25s ease,
+      transform 0.35s ease;
+  }
+
+  .navOpen {
+    max-height: 420px;
+    padding: 8px 0 4px;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    border-top: 1px solid rgba(15, 23, 42, 0.08);
+  }
+
+  .navLink {
+    min-height: 44px;
+    justify-content: flex-start;
+    padding: 0.7rem 0.9rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 10px;
+    transform: translateX(-8px);
+    opacity: 0;
+    transition: color 0.2s ease, background 0.2s ease, transform 0.3s ease,
+      opacity 0.3s ease;
+
+    &:hover,
+    &:focus-visible {
+      border-radius: 10px;
+    }
+  }
+
+  .navOpen .navLink {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  .navOpen .navLink:nth-child(2) {
+    transition-delay: 0.03s;
+  }
+
+  .navOpen .navLink:nth-child(3) {
+    transition-delay: 0.06s;
+  }
+
+  .navOpen .navLink:nth-child(4) {
+    transition-delay: 0.09s;
+  }
+
+  .navOpen .navLink:nth-child(5) {
+    transition-delay: 0.12s;
+  }
+
+  .navOpen .navLink:nth-child(6) {
+    transition-delay: 0.15s;
+  }
+
+  .actions {
+    display: flex;
+    flex: 0 0 100%;
+    order: 4;
+    justify-content: stretch;
+    gap: 8px;
+    max-height: 0;
+    padding-top: 0;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition: max-height 0.35s ease, padding 0.35s ease, opacity 0.25s ease,
+      transform 0.35s ease;
+  }
+
+  .actionsOpen {
+    max-height: 80px;
+    padding-top: 8px;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    border-top: 1px solid rgba(15, 23, 42, 0.08);
+  }
+
+  .loginButton {
+    padding: 0.7rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .signupButton {
+    padding: 0.75rem 1.2rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .inner {
+    width: min(100% - 16px, 1280px);
+    min-height: 56px;
+    padding: 10px 0;
+    gap: 10px;
+  }
+
+  .brand {
+    width: min(175px, calc(100% - 52px));
+  }
+
+  .loginButton {
+    padding: 0.6rem 0.9rem;
+    font-size: 0.85rem;
+  }
+
+  .signupButton {
+    padding: 0.65rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .locationButton {
+    span {
+      display: none;
+    }
+  }
+}
