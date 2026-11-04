@@ -10,7 +10,7 @@ export const cleaningServiceNames = [
 export const tutorLevels = ["Kids", "Matriculation", "Senior Studies", "Quran Studies"] as const;
 export type TutorLevel = (typeof tutorLevels)[number];
 
-type ServiceProvider = {
+export type ServiceProvider = {
   id: string;
   name: string;
   category: string;
