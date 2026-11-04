@@ -1,0 +1,600 @@
+.page {
+  color: #14284b;
+  background: #fff;
+}
+
+.container {
+  width: min(1320px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.introSection {
+  background: linear-gradient(110deg, #f3f8ff 0%, #fbfcff 54%, #f5f8fc 100%);
+  border-bottom: 1px solid #e8edf5;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 20px;
+  color: #65728a;
+  font-size: 0.78rem;
+}
+
+.breadcrumb a:hover {
+  color: #075ddd;
+}
+
+.intro {
+  display: grid;
+  min-height: 260px;
+  grid-template-columns: 1fr;
+  align-items: center;
+  padding-top: 12px;
+}
+
+.introCopy {
+  position: relative;
+  z-index: 1;
+  padding: 18px 0 42px;
+}
+
+.eyebrow {
+  margin-bottom: 9px;
+  color: #0960dc;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+}
+
+.introCopy h1 {
+  color: #102751;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 1.08;
+  letter-spacing: -0.055em;
+}
+
+.introCopy > p:last-child {
+  margin-top: 12px;
+  color: #5b6880;
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.searchPanel {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 0.8fr auto;
+  align-items: end;
+  gap: 18px;
+  margin-bottom: -24px;
+  padding: 18px 20px;
+  border: 1px solid #e1e7f0;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: 0 12px 30px rgba(27, 55, 96, 0.1);
+  transform: translateY(24px);
+}
+
+.field {
+  display: grid;
+  min-width: 0;
+  gap: 8px;
+  color: #172b4e;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.inputWrap,
+.selectWrap {
+  display: flex;
+  min-width: 0;
+  height: 46px;
+  align-items: center;
+  gap: 9px;
+  padding: 0 12px;
+  border: 1px solid #dfe5ef;
+  border-radius: 8px;
+  background: #fff;
+  color: #192f54;
+}
+
+.inputWrap:focus-within,
+.selectWrap:focus-within {
+  border-color: #3c7ee9;
+  box-shadow: 0 0 0 3px rgba(27, 101, 221, 0.1);
+}
+
+.inputWrap input,
+.selectWrap select {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.78rem;
+}
+
+.inputWrap input::placeholder {
+  color: #8792a5;
+}
+
+.inputWrap svg,
+.selectWrap svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: #536884;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.searchButton {
+  min-width: 180px;
+  height: 46px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #1268ee, #0752cf);
+  color: white;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 7px 16px rgba(13, 87, 211, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.searchButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(13, 87, 211, 0.25);
+}
+
+.catalog {
+  padding: 64px 0 26px;
+  background: #fff;
+}
+
+.catalogLayout {
+  display: grid;
+  grid-template-columns: 224px minmax(0, 1fr);
+  align-items: start;
+  gap: 28px;
+}
+
+.sidebar {
+  padding: 17px 12px 12px;
+  border: 1px solid #e4e9f1;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 5px 18px rgba(20, 49, 88, 0.04);
+}
+
+.sidebar h2 {
+  margin: 0 8px 12px;
+  color: #152b50;
+  font-size: 0.94rem;
+}
+
+.sidebar nav {
+  display: grid;
+  gap: 2px;
+}
+
+.sidebar nav button {
+  display: flex;
+  min-height: 34px;
+  align-items: center;
+  gap: 9px;
+  padding: 6px 8px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #42526b;
+  font: inherit;
+  font-size: 0.72rem;
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.18s ease, background 0.18s ease;
+}
+
+.sidebar nav button:hover,
+.sidebar nav .categoryActive {
+  background: #edf4ff;
+  color: #075ddd;
+}
+
+.sidebar nav .categoryActive {
+  box-shadow: inset 3px 0 #1268ee;
+  font-weight: 700;
+}
+
+.categoryIcon {
+  width: 17px;
+  flex: 0 0 auto;
+  color: #687b99;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.categoryIconSvg {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 auto;
+  color: inherit;
+}
+
+.categoryActive .categoryIcon,
+.categoryActive .categoryIconSvg,
+.sidebar nav button:hover .categoryIcon,
+.sidebar nav button:hover .categoryIconSvg {
+  color: #1268ee;
+}
+
+.requestCard {
+  display: grid;
+  justify-items: center;
+  margin-top: 17px;
+  padding: 13px 10px;
+  border: 1px solid #8bb5ff;
+  border-radius: 9px;
+  background: #f7faff;
+  text-align: center;
+}
+
+.requestIcon {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  margin-bottom: 5px;
+  place-items: center;
+  border-radius: 50%;
+  background: #e6f0ff;
+  color: #1268ee;
+  font-size: 1.2rem;
+}
+
+.requestCard strong {
+  color: #075ddd;
+  font-size: 0.7rem;
+}
+
+.requestCard p {
+  margin: 4px 0 9px;
+  color: #697791;
+  font-size: 0.65rem;
+  line-height: 1.4;
+}
+
+.requestCard a {
+  padding: 6px 12px;
+  border: 1px solid #1268ee;
+  border-radius: 6px;
+  color: #075ddd;
+  font-size: 0.67rem;
+  font-weight: 700;
+}
+
+.requestCard a:hover {
+  background: #1268ee;
+  color: white;
+}
+
+.resultsHeader {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 17px;
+}
+
+.resultsHeader .eyebrow {
+  margin-bottom: 5px;
+}
+
+.resultsHeader h2 {
+  color: #14284b;
+  font-size: 1.45rem;
+  letter-spacing: -0.035em;
+}
+
+.resultsHeader > span {
+  padding-bottom: 3px;
+  color: #77849a;
+  font-size: 0.75rem;
+}
+
+.serviceGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.serviceCard {
+  display: flex;
+  min-height: 190px;
+  flex-direction: column;
+  align-items: center;
+  padding: 14px 13px 13px;
+  border: 1px solid #e2e7ef;
+  border-radius: 11px;
+  background: linear-gradient(160deg, #fff 0%, #fcfdff 100%);
+  text-align: center;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.serviceCardLink {
+  color: inherit;
+  text-decoration: none;
+}
+
+.serviceCardLink:focus-visible {
+  outline: 3px solid rgba(18, 104, 238, 0.35);
+  outline-offset: 3px;
+}
+
+.serviceCard:hover {
+  transform: translateY(-3px);
+  border-color: #c9dafa;
+  box-shadow: 0 10px 24px rgba(28, 62, 112, 0.09);
+}
+
+.serviceIcon {
+  display: grid;
+  width: 70px;
+  height: 70px;
+  flex: 0 0 auto;
+  margin-bottom: 10px;
+  place-items: center;
+}
+
+.serviceIconIllustration {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  transition: transform 0.2s ease;
+}
+
+.serviceCard:hover .serviceIconIllustration {
+  transform: scale(1.04);
+}
+
+.serviceCard h3 {
+  color: #17294b;
+  font-size: 0.83rem;
+  line-height: 1.35;
+}
+
+.serviceCard p {
+  max-width: 230px;
+  min-height: 34px;
+  margin: 6px 0 5px;
+  color: #65728a;
+  font-size: 0.68rem;
+  line-height: 1.45;
+}
+
+.serviceCard > a,
+.cardAction {
+  margin-top: auto;
+  color: #075ddd;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.serviceCard > a span,
+.cardAction > span {
+  display: inline-block;
+  margin-left: 3px;
+  transition: transform 0.18s ease;
+}
+
+.serviceCard > a:hover span,
+.serviceCardLink:hover .cardAction > span {
+  transform: translateX(3px);
+}
+
+.emptyState {
+  padding: 48px 20px;
+  border: 1px dashed #cbd6e5;
+  border-radius: 12px;
+  color: #65728a;
+  text-align: center;
+}
+
+.trustBar {
+  display: grid;
+  grid-template-columns: 1.35fr repeat(4, 1fr);
+  align-items: center;
+  gap: 14px;
+  margin-top: 26px;
+  padding: 16px 21px;
+  border: 1px solid #cbdcff;
+  border-radius: 11px;
+  background: linear-gradient(100deg, #f5f9ff, #fff);
+}
+
+.trustBar h2 {
+  color: #172b4e;
+  font-size: 1rem;
+}
+
+.trustBar > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.trustBar > div > span {
+  display: grid;
+  width: 31px;
+  height: 31px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 8px;
+  background: #e8f1ff;
+  color: #1268ee;
+  font-size: 1.1rem;
+}
+
+.trustBar p {
+  display: grid;
+  gap: 3px;
+}
+
+.trustBar strong {
+  color: #203452;
+  font-size: 0.7rem;
+}
+
+.trustBar small {
+  color: #78859a;
+  font-size: 0.63rem;
+}
+
+@media (max-width: 1080px) {
+  .searchPanel {
+    grid-template-columns: 1.25fr 1fr 0.75fr;
+  }
+
+  .searchButton {
+    grid-column: 1 / -1;
+  }
+
+  .catalogLayout {
+    grid-template-columns: 190px minmax(0, 1fr);
+    gap: 18px;
+  }
+
+  .serviceGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .trustBar {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .trustBar h2 {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 700px) {
+  .container {
+    width: min(100% - 32px, 1320px);
+  }
+
+  .breadcrumb {
+    padding-top: 14px;
+  }
+
+  .intro {
+    min-height: 0;
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding-top: 5px;
+  }
+
+  .introCopy {
+    padding: 22px 0 8px;
+  }
+
+  .introCopy h1 {
+    font-size: clamp(2.2rem, 10vw, 3.2rem);
+  }
+
+  .introCopy > p:last-child {
+    font-size: 0.9rem;
+  }
+
+  .searchPanel {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: -24px;
+    padding: 15px;
+  }
+
+  .searchButton {
+    grid-column: auto;
+  }
+
+  .catalog {
+    padding-top: 54px;
+  }
+
+  .catalogLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    padding: 12px;
+  }
+
+  .sidebar nav {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 5px;
+    scrollbar-width: thin;
+  }
+
+  .sidebar nav button {
+    min-height: 36px;
+    flex: 0 0 auto;
+    padding-inline: 10px;
+    border: 1px solid #e8edf5;
+  }
+
+  .sidebar nav .categoryActive {
+    box-shadow: inset 0 -2px #1268ee;
+  }
+
+  .sidebar h2,
+  .requestCard {
+    display: none;
+  }
+
+  .serviceGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .serviceCard {
+    min-height: 185px;
+    padding-inline: 9px;
+  }
+
+  .trustBar {
+    grid-template-columns: 1fr 1fr;
+    padding: 15px;
+  }
+
+  .trustBar h2 {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 380px) {
+  .resultsHeader {
+    align-items: start;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .serviceCard {
+    min-height: 200px;
+  }
+
+  .trustBar {
+    grid-template-columns: 1fr;
+  }
+
+  .trustBar h2 {
+    grid-column: auto;
+  }
+}

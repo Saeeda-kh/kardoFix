@@ -1,41 +1,44 @@
 import Image from "next/image";
 import styles from "./Hero.module.scss";
 
-function LocationIcon() {
-  return (
-    <svg viewBox="0 0 20 20" aria-hidden="true">
-      <path d="M10 17s5-4.5 5-9a5 5 0 1 0-10 0c0 4.5 5 9 5 9Zm0-7.2a2.2 2.2 0 1 1 0-4.4 2.2 2.2 0 0 1 0 4.4Z" />
-    </svg>
-  );
-}
-
-function GridIcon() {
-  return (
-    <svg viewBox="0 0 20 20" aria-hidden="true">
-      <rect x="3" y="3" width="5" height="5" rx="1" />
-      <rect x="12" y="3" width="5" height="5" rx="1" />
-      <rect x="3" y="12" width="5" height="5" rx="1" />
-      <rect x="12" y="12" width="5" height="5" rx="1" />
-    </svg>
-  );
-}
-
-function ChevronIcon() {
-  return (
-    <svg viewBox="0 0 20 20" aria-hidden="true">
-      <path d="m5.25 7.5 4.75 4.75 4.75-4.75" />
-    </svg>
-  );
-}
-
 const benefits = ["Verified Professionals", "Transparent Pricing", "On-Time Service", "24/7 Support"];
+
+const bookingHighlights = [
+  ["10,000+", "Happy Customers", "♟"],
+  ["4.7/5", "Average Rating", "☆"],
+  ["100%", "Secure Booking", "◇"],
+  ["24/7", "Customer Support", "◌"],
+];
+
+function BenefitIcon({ index }: { index: number }) {
+  const paths = [
+    "M12 3 19 6v5.4c0 4.5-2.9 7.9-7 9.6-4.1-1.7-7-5.1-7-9.6V6l7-3Zm-3.2 9 2.1 2.1 4.5-4.5",
+    "M6 4h12v16H6zM9 8h6M9 12h6M9 16h3",
+    "M12 5v7l4 2M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z",
+    "M5 6.5a7 7 0 0 1 14 0v5a2 2 0 0 1-2 2h-1v-5h3M5 8.5H3v5h2v-5Zm3 6h3",
+  ];
+
+  return (
+    <span className={styles.benefitIcon} aria-hidden="true">
+      <svg viewBox="0 0 24 24">
+        <path d={paths[index]} />
+      </svg>
+    </span>
+  );
+}
 
 export default function Hero() {
   return (
-    <section className={styles.hero} aria-labelledby="hero-title">
+    <>
+      <section className={styles.hero} aria-labelledby="hero-title">
       <div className={styles.content}>
         <div className={styles.copy}>
-          <p className={styles.eyebrow}>Trusted. Verified. At Your Service.</p>
+          <p className={styles.eyebrow}>
+            <span className={styles.eyebrowText}>
+              <span className={styles.animatedPhrase}>kaam hy?</span>
+              <strong className={styles.animatedPhrase}>kardo<span>Fix</span></strong>
+            </span>
+          </p>
           <h1 id="hero-title">
             Ghar ka har kaam,
             <span>ab hoga aasaan.</span>
@@ -45,10 +48,10 @@ export default function Hero() {
           </p>
 
           <ul className={styles.benefits} aria-label="KardoFix benefits">
-            {benefits.map((benefit) => (
+            {benefits.map((benefit, index) => (
               <li key={benefit}>
-                <span className={styles.check} aria-hidden="true">✓</span>
-                {benefit}
+                <BenefitIcon index={index} />
+                <span>{benefit}</span>
               </li>
             ))}
           </ul>
@@ -57,7 +60,7 @@ export default function Hero() {
         <div className={styles.visual} aria-hidden="true">
           <Image
             src="/heros_image_home_page.png"
-            alt="KardoFix service professionals"
+            alt=""
             fill
             priority
             sizes="(max-width: 900px) 100vw, 50vw"
@@ -65,22 +68,21 @@ export default function Hero() {
           />
         </div>
 
-        <div className={styles.search}>
-          <button type="button" className={styles.selectControl}>
-            <LocationIcon />
-            <span>Lahore</span>
-            <ChevronIcon />
-          </button>
-          <button type="button" className={styles.selectControl}>
-            <GridIcon />
-            <span>What service do you need?</span>
-            <ChevronIcon />
-          </button>
-          <button type="button" className={styles.searchButton}>
-            Find Services
-          </button>
-        </div>
       </div>
-    </section>
+      </section>
+      <div className={styles.bookingPanel}>
+        <ul className={styles.bookingHighlights} aria-label="KardoFix service statistics">
+          {bookingHighlights.map(([value, label, icon]) => (
+            <li className={styles.bookingHighlight} key={label}>
+              <span className={styles.bookingHighlightIcon} aria-hidden="true">{icon}</span>
+              <span>
+                <strong>{value}</strong>
+                <small>{label}</small>
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
   );
 }

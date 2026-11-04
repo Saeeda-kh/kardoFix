@@ -48,34 +48,96 @@
 }
 
 .serviceCard {
+  position: relative;
   display: flex;
+  flex-direction: column;
   min-height: 166px;
   align-items: center;
   justify-content: center;
-  padding: 18px 12px;
-  border: 1px solid #e5eaf3;
-  border-radius: 14px;
+  overflow: hidden;
+  padding: 24px 16px 20px;
+  border: 1px solid rgba(218, 228, 242, 0.9);
+  border-radius: 18px;
   background: #fff;
-  box-shadow: 0 8px 22px rgba(21, 56, 104, 0.06);
+  box-shadow: 0 12px 26px rgba(21, 56, 104, 0.07);
   text-align: center;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .serviceCard:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 14px 28px rgba(21, 56, 104, 0.12);
+  transform: translateY(-6px);
+  border-color: #b9d2f3;
+  box-shadow: 0 18px 34px rgba(21, 56, 104, 0.14);
 }
 
 .serviceIcon {
   display: grid;
-  width: 58px;
-  height: 58px;
+  width: 62px;
+  height: 62px;
   margin-bottom: 12px;
   place-items: center;
-  border-radius: 50%;
-  background: #edf6ff;
+  border: 1px solid transparent;
+  border-radius: 18px;
   color: #1265d7;
-  font-size: 1.8rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.serviceIcon svg {
+  width: 29px;
+  height: 29px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+
+.serviceIconImage {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 12px;
+  object-fit: contain;
+}
+
+.serviceIcon-ac {
+  border-color: #c9e5f7;
+  background: linear-gradient(145deg, #e9f9ff, #cceeff);
+  color: #1487c5;
+}
+
+.serviceIcon-plumbing {
+  border-color: #c9d9fa;
+  background: linear-gradient(145deg, #edf1ff, #d5e0ff);
+  color: #416de0;
+}
+
+.serviceIcon-electrical {
+  border-color: #f5d58e;
+  background: linear-gradient(145deg, #fff8dc, #ffe7a8);
+  color: #db8b08;
+}
+
+.serviceIcon-cleaning {
+  border-color: #bfeadd;
+  background: linear-gradient(145deg, #eafff7, #c9f2e3);
+  color: #159b76;
+}
+
+.serviceIcon-painting {
+  border-color: #f3c8d9;
+  background: linear-gradient(145deg, #fff0f6, #fbd5e5);
+  color: #d65283;
+}
+
+.serviceIcon-carpentry {
+  border-color: #e9c6a3;
+  background: linear-gradient(145deg, #fff3e6, #f8d9bb);
+  color: #b86b2c;
+}
+
+.serviceCardContent {
+  display: grid;
+  gap: 3px;
 }
 
 .serviceCard h3 {
@@ -89,7 +151,6 @@
 }
 
 .serviceCard strong {
-  margin-top: 4px;
   color: #0861dd;
   font-size: 1.05rem;
 }

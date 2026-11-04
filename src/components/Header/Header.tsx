@@ -1,10 +1,18 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { serviceCategories } from "@/data/serviceCategories";
 import styles from "./Header.module.scss";
 
-const navItems = ["Home", "Services", "How it Work", "Become a Pro", "About Us", "Contact Us"];
+const navItems = [
+  { label: "Service Providers", href: "/service-providers" },
+  { label: "Bookings", href: "/bookings" },
+  { label: "Offers", href: "/offers" },
+  { label: "Help", href: "/help" },
+];
 
 function ChevronIcon() {
   return (
@@ -24,11 +32,14 @@ function LocationIcon() {
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const pathname = usePathname();
+  const isServicesActive = pathname.startsWith("/services");
 
   return (
     <header className={styles.header}>
       <div className={styles.inner}>
-        <a href="#" className={styles.brand} aria-label="KardoFix home">
+        <Link href="/" className={styles.brand} aria-label="KardoFix home">
           <Image
             src="/kardofix_logo.png"
             alt="KardoFix logo"
@@ -37,7 +48,7 @@ export default function Header() {
             priority
             className={styles.logo}
           />
-        </a>
+        </Link>
 
         <button
           type="button"
@@ -45,7 +56,10 @@ export default function Header() {
           aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
           aria-expanded={isMenuOpen}
           aria-controls="main-navigation"
-          onClick={() => setIsMenuOpen((open) => !open)}
+          onClick={() => {
+            setIsMenuOpen((open) => !open);
+            setIsServicesOpen(false);
+          }}
         >
           <span />
           <span />
@@ -57,15 +71,77 @@ export default function Header() {
           className={`${styles.nav} ${isMenuOpen ? styles.navOpen : ""}`.trim()}
           aria-label="Main navigation"
         >
-          {navItems.map((item, index) => (
-            <a
-              key={item}
-              href="#"
-              className={`${styles.navLink} ${index === 0 ? styles.active : ""}`.trim()}
-              onClick={() => setIsMenuOpen(false)}
+          <Link
+            href="/"
+            className={`${styles.navLink} ${pathname === "/" ? styles.active : ""}`.trim()}
+            onClick={() => {
+              setIsMenuOpen(false);
+              setIsServicesOpen(false);
+            }}
+          >
+            Home
+          </Link>
+          <div
+            className={`${styles.navDropdown} ${isServicesActive ? styles.navDropdownActive : ""} ${isServicesOpen ? styles.navDropdownOpen : ""}`.trim()}
+            onMouseEnter={() => setIsServicesOpen(true)}
+            onMouseLeave={() => setIsServicesOpen(false)}
+            onFocusCapture={() => setIsServicesOpen(true)}
+            onBlur={(event) => {
+              if (!event.currentTarget.contains(event.relatedTarget)) {
+                setIsServicesOpen(false);
+              }
+            }}
+          >
+            <div className={styles.navDropdownTrigger}>
+              <Link
+                href="/services"
+                className={`${styles.navLink} ${isServicesActive ? styles.active : ""}`.trim()}
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  setIsServicesOpen(false);
+                }}
+              >
+                Services
+              </Link>
+              <button
+                type="button"
+                className={styles.dropdownToggle}
+                aria-label={isServicesOpen ? "Hide service categories" : "Show service categories"}
+                aria-expanded={isServicesOpen}
+                aria-controls="service-categories"
+                onClick={() => setIsServicesOpen((open) => !open)}
+              >
+                <ChevronIcon />
+              </button>
+            </div>
+            <div className={styles.submenu} id="service-categories">
+              {serviceCategories.map((service) => (
+                <Link
+                  key={service.slug}
+                  href={service.href}
+                  className={pathname === service.href ? styles.submenuActive : ""}
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    setIsServicesOpen(false);
+                  }}
+                >
+                  {service.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+          {navItems.map((item) => (
+            <Link
+              key={item.label}
+              href={item.href}
+              className={`${styles.navLink} ${pathname === item.href ? styles.active : ""}`.trim()}
+              onClick={() => {
+                setIsMenuOpen(false);
+                setIsServicesOpen(false);
+              }}
             >
-              {item}
-            </a>
+              {item.label}
+            </Link>
           ))}
         </nav>
 

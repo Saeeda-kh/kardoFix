@@ -2,8 +2,8 @@
   width: 100%;
   background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+  border-bottom: 0;
+  box-shadow: 0 6px 24px rgba(15, 23, 42, 0.035);
   position: fixed;
   top: 0;
   z-index: 100;
@@ -80,7 +80,7 @@
   min-width: 0;
   gap: 2px;
   height: 80px;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .menuToggle {
@@ -126,7 +126,7 @@
   align-items: center;
   justify-content: center;
   flex: 0 1 auto;
-  padding: 0.65rem clamp(0.55rem, 1vw, 1rem);
+  padding: 0 clamp(0.55rem, 1vw, 1rem);
   font-size: clamp(0.8rem, 0.2vw + 0.72rem, 0.95rem);
   font-weight: 500;
   color: #27314d;
@@ -159,6 +159,131 @@
     border-radius: 0;
     transform: none;
   }
+}
+
+.navDropdown {
+  position: relative;
+  display: flex;
+  flex: 0 0 auto;
+  align-items: stretch;
+  border-radius: 8px;
+}
+
+.navDropdownActive {
+  background: rgba(15, 74, 197, 0.08);
+}
+
+.navDropdownTrigger {
+  display: flex;
+  height: 100%;
+  align-items: stretch;
+  border-radius: 8px;
+  transition: color 0.2s ease;
+}
+
+.navDropdownTrigger:hover,
+.navDropdownTrigger:focus-within {
+  color: #0f4ac5;
+}
+
+.navDropdownActive .navDropdownTrigger {
+  color: #0f4ac5;
+}
+
+.navDropdownTrigger .navLink,
+.navDropdownTrigger .navLink:hover,
+.navDropdownTrigger .navLink.active,
+.navDropdownTrigger .navLink.active:hover {
+  border-radius: 8px;
+  background: transparent;
+}
+
+.navDropdownTrigger .navLink:hover,
+.navDropdownTrigger .navLink.active {
+  color: #0f4ac5;
+}
+
+.navDropdownTrigger .navLink {
+  padding-right: 0.45rem;
+}
+
+.dropdownToggle {
+  display: inline-grid;
+  width: 34px;
+  flex: 0 0 auto;
+  place-items: center;
+  padding: 0 8px 0 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #27314d;
+  cursor: pointer;
+}
+
+.dropdownToggle svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.2s ease;
+}
+
+.navDropdownOpen .dropdownToggle svg {
+  transform: rotate(180deg);
+}
+
+.dropdownToggle:hover,
+.dropdownToggle:focus-visible {
+  color: #0f4ac5;
+}
+
+.submenu {
+  position: absolute;
+  top: calc(100% - 7px);
+  left: 0;
+  z-index: 110;
+  display: grid;
+  width: 440px;
+  max-height: min(440px, calc(100vh - 110px));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+  padding: 10px;
+  overflow-y: auto;
+  border: 1px solid #e5eaf2;
+  border-radius: 13px;
+  background: #fff;
+  box-shadow: 0 18px 40px rgba(20, 42, 78, 0.16);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+}
+
+.navDropdownOpen .submenu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.submenu a {
+  display: flex;
+  min-height: 40px;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 8px;
+  color: #34425c;
+  font-size: 0.82rem;
+  line-height: 1.25;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+
+.submenu a:hover,
+.submenu .submenuActive {
+  background: #edf4ff;
+  color: #075ddd;
 }
 
 .actions {
@@ -247,7 +372,7 @@
 
 @media (max-width: 1080px) {
   :global(body) {
-    padding-top: 132px;
+    padding-top: 142px;
   }
 
   .inner {
@@ -281,19 +406,37 @@
     gap: 4px;
     padding-top: 8px;
     border-top: 1px solid rgba(15, 23, 42, 0.06);
+    overflow: visible;
   }
 
   .navLink {
     flex: 0 0 auto;
     height: 48px;
-    padding: 0.6rem 0.9rem;
+    padding: 0 0.9rem;
     font-size: 0.88rem;
     border-radius: 10px;
 
     &:hover {
       height: 48px;
+      padding: 0 0.9rem;
       border-radius: 10px;
     }
+  }
+
+  .navDropdown {
+    flex: 0 0 auto;
+  }
+
+  .navDropdownTrigger {
+    height: 48px;
+  }
+
+  .navDropdownTrigger .navLink {
+    height: 48px;
+  }
+
+  .submenu {
+    top: 100%;
   }
 
   .actions {
@@ -310,7 +453,7 @@
 
 @media (max-width: 600px) {
   :global(body) {
-    padding-top: 64px;
+    padding-top: 96px;
   }
 
   .inner {
@@ -347,8 +490,8 @@
     flex-direction: column;
     align-items: stretch;
     gap: 4px;
-    padding: 0;
     overflow: hidden;
+    padding: 0;
     opacity: 0;
     transform: translateY(-8px);
     pointer-events: none;
@@ -357,7 +500,7 @@
   }
 
   .navOpen {
-    max-height: 420px;
+    max-height: 760px;
     padding: 8px 0 4px;
     opacity: 1;
     transform: translateY(0);
@@ -383,9 +526,80 @@
     }
   }
 
+  .navDropdown {
+    display: block;
+    flex: 0 0 auto;
+    width: 100%;
+  }
+
+  .navDropdownTrigger {
+    min-height: 44px;
+    height: auto;
+    align-items: stretch;
+    background: transparent;
+  }
+
+  .navDropdownTrigger:hover,
+  .navDropdownTrigger:focus-within,
+  .navDropdownOpen .navDropdownTrigger,
+  .navDropdownActive .navDropdownTrigger {
+    background: #edf4ff;
+  }
+
+  .navDropdownTrigger .navLink {
+    flex: 1 1 auto;
+    height: 44px;
+    padding-right: 0.9rem;
+    background: transparent;
+  }
+
+  .dropdownToggle {
+    width: 44px;
+    flex: 0 0 auto;
+    padding: 0;
+    border-radius: 10px;
+    transform: translateX(-8px);
+    opacity: 0;
+    transition: color 0.2s ease, background 0.2s ease, transform 0.3s ease, opacity 0.3s ease;
+  }
+
   .navOpen .navLink {
     transform: translateX(0);
     opacity: 1;
+  }
+
+  .navOpen .dropdownToggle {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  .submenu {
+    position: static;
+    display: grid;
+    width: 100%;
+    max-height: 0;
+    grid-template-columns: 1fr;
+    gap: 2px;
+    padding: 0 0 0 14px;
+    overflow-y: auto;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition: max-height 0.25s ease, padding 0.25s ease;
+  }
+
+  .navDropdownOpen .submenu {
+    max-height: 300px;
+    padding: 4px 0 8px 14px;
+  }
+
+  .submenu a {
+    min-height: 36px;
+    padding: 7px 10px;
   }
 
   .navOpen .navLink:nth-child(2) {
@@ -404,7 +618,7 @@
     transition-delay: 0.12s;
   }
 
-  .navOpen .navLink:nth-child(6) {
+  .navOpen > .navLink:nth-child(6) {
     transition-delay: 0.15s;
   }
 

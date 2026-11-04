@@ -1,0 +1,15 @@
+export const serviceCategories = [
+  { label: "Cleaning & Home Care", slug: "cleaning-home-care", href: "/services/cleaning-home-care" },
+  { label: "Plumbing", slug: "plumbing", href: "/services#plumbing" },
+  { label: "Electrical", slug: "electrical", href: "/services#electrical" },
+  { label: "Appliances Repair", slug: "appliances-repair", href: "/services#appliances-repair" },
+  { label: "Carpentry & Furniture", slug: "carpentry-furniture", href: "/services#carpentry-furniture" },
+  { label: "Painting", slug: "painting", href: "/services#painting" },
+  { label: "Pest Control", slug: "pest-control", href: "/services#pest-control" },
+  { label: "AC Services", slug: "ac-services", href: "/services#ac-services" },
+  { label: "Home Security", slug: "home-security", href: "/services#home-security" },
+  { label: "Beauty & Wellness", slug: "beauty-wellness", href: "/services#beauty-wellness" },
+  { label: "Packers & Movers", slug: "packers-movers", href: "/services#packers-movers" },
+  { label: "Events & Occasions", slug: "events-occasions", href: "/services#events-occasions" },
+  { label: "Other Services", slug: "other-services", href: "/services#other-services" },
+] as const;
