@@ -23,6 +23,10 @@ const services = [
   { category: "Beauty & Wellness", description: "Salon at home, massage, makeup and more.", count: 16, icon: "beauty" },
   { category: "Packers & Movers", description: "Home shifting, office shifting, packaging and more.", count: 7, icon: "moving" },
   { category: "Events & Occasions", description: "Decor, catering, photography and more.", count: 9, icon: "events" },
+  { category: "Home Tutor", description: "Tutoring for kids, matriculation, senior studies, and Quran learning.", count: 4, icon: "tutor" },
+  { category: "Home Maid", description: "Reliable home help for everyday household tasks.", count: 3, icon: "maid" },
+  { category: "Cooking Services", description: "Find experienced home cooks and chefs for meals at home.", count: 3, icon: "cooking" },
+  { category: "Nursing Services", description: "Find qualified nursing professionals for attentive care at home.", count: 3, icon: "nursing" },
   { category: "Other Services", description: "A range of additional home maintenance and support services.", count: 6, icon: "other" },
 ];
 
@@ -158,6 +162,41 @@ function ServiceIcon({ name }: { name: ServiceIconName }) {
           <path d="m17 12 1-3m28 6 2-3" stroke="#F2B84A" strokeWidth="2" strokeLinecap="round" />
         </svg>
       );
+    case "tutor":
+      return (
+        <svg {...props}>
+          <path d="M12 12 32 19l20-7-20-7-20 7 20 7Z" fill="#6C82D9" stroke="#4559A8" strokeWidth="2.5" strokeLinejoin="round" />
+          <path d="M21 15v11c6 5 16 5 22 0V15" fill="#E8EDFF" stroke="#4559A8" strokeWidth="2.5" strokeLinejoin="round" />
+          <path d="M51 13v15" stroke="#4559A8" strokeWidth="2.5" strokeLinecap="round" />
+          <circle cx="51" cy="31" r="3" fill="#F2B84A" />
+          <path d="M22 40h20" stroke="#2FAD91" strokeWidth="2.5" strokeLinecap="round" />
+        </svg>
+      );
+    case "maid":
+      return (
+        <svg {...props}>
+          <path d="M17 28a8 8 0 1 0-16 0c0 4 3 7 8 7s8-3 8-7Z" transform="translate(20 0)" fill="#F2B98C" stroke="#996947" strokeWidth="2.5" />
+          <path d="M14 54c1-10 7-16 18-16s17 6 18 16" fill="#6BA98B" stroke="#47775F" strokeWidth="2.5" />
+          <path d="m43 23 7 7m-6-10 7 6" stroke="#4F7296" strokeWidth="3" strokeLinecap="round" />
+          <path d="M48 30 55 38" stroke="#C59054" strokeWidth="3" strokeLinecap="round" />
+        </svg>
+      );
+    case "cooking":
+      return (
+        <svg {...props}>
+          <path d="M17 29a9 9 0 0 0-18 0v5h18z" transform="translate(15 0)" fill="#F2B84A" stroke="#B77A1D" strokeWidth="2.5" />
+          <path d="M21 34v13h22V34M18 47h28v6H18z" fill="#F7F9FC" stroke="#65758D" strokeWidth="2.5" strokeLinejoin="round" />
+          <path d="M27 39h10m-10 5h10" stroke="#E78055" strokeWidth="2.5" strokeLinecap="round" />
+          <path d="M28 13c-2-3 2-4 0-7m8 7c-2-3 2-4 0-7" fill="none" stroke="#54AFC1" strokeWidth="2" strokeLinecap="round" />
+        </svg>
+      );
+    case "nursing":
+      return (
+        <svg {...props}>
+          <path d="M32 53S12 41 12 27a11 11 0 0 1 20-6 11 11 0 0 1 20 6c0 14-20 26-20 26Z" fill="#F7DCE4" stroke="#C45D79" strokeWidth="2.5" strokeLinejoin="round" />
+          <path d="M29 22h6v7h7v6h-7v7h-6v-7h-7v-6h7z" fill="#fff" stroke="#C45D79" strokeWidth="2" strokeLinejoin="round" />
+        </svg>
+      );
     default:
       return (
         <svg {...props}>
@@ -206,6 +245,14 @@ function CategoryIcon({ label }: { label: string }) {
       return <svg {...categoryIconProps}><path d="M4 9h11v8H4zm11 0h5l2 3v5h-7V9ZM8 19v2m8-2v2" /><circle cx="8" cy="19.5" r="1.5" /><circle cx="17" cy="19.5" r="1.5" /></svg>;
     case "Events & Occasions":
       return <svg {...categoryIconProps}><path d="M7 4v2M17 4v2M4 9h16M6 7h12a2 2 0 0 1 2 2v7a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V9a2 2 0 0 1 2-2Z" /><path d="M9 13h6M9 16h4" /></svg>;
+    case "Home Tutor":
+      return <svg {...categoryIconProps}><path d="m3 9 9-5 9 5-9 5-9-5Z" /><path d="M7 11v5c3 2.5 7 2.5 10 0v-5m4-2v7" /></svg>;
+    case "Home Maid":
+      return <svg {...categoryIconProps}><path d="M8 11a4 4 0 1 0 8 0 4 4 0 0 0-8 0Z" /><path d="M4 21c.7-4.2 3.3-6.3 8-6.3s7.3 2.1 8 6.3M17 4l3 3m-2-4 3 3" /></svg>;
+    case "Cooking Services":
+      return <svg {...categoryIconProps}><path d="M5 10h14l-1 10H6L5 10Z" /><path d="M4 10a8 8 0 0 1 16 0M9 5c-1-2 1-2 0-4m6 4c-1-2 1-2 0-4" /></svg>;
+    case "Nursing Services":
+      return <svg {...categoryIconProps}><path d="M12 20s-7-4.2-7-9.2a4.2 4.2 0 0 1 7-3.1 4.2 4.2 0 0 1 7 3.1C19 15.8 12 20 12 20Z" /><path d="M11 9h2v2h2v2h-2v2h-2v-2H9v-2h2z" /></svg>;
     case "Other Services":
       return <svg {...categoryIconProps}><circle cx="12" cy="12" r="8" /><path d="M9 12h6M12 9v6" /></svg>;
     default:
@@ -350,9 +397,13 @@ export default function ServicesCatalog() {
                         </div>
                         <h3>{service.category}</h3>
                         <p>{service.description}</p>
-                        {service.category === "Cleaning & Home Care" ? (
+                        {service.category === "Cleaning & Home Care" || service.category === "Home Tutor" || service.category === "Home Maid" || service.category === "Cooking Services" || service.category === "Nursing Services" ? (
                           <span className={styles.cardAction}>
-                            Explore {service.count} Services <span aria-hidden="true">→</span>
+                            {service.category === "Home Tutor"
+                              ? "Explore Tutors"
+                              : service.category === "Nursing Services"
+                                ? "Explore Nurses"
+                              : `Explore ${service.count} Services`} <span aria-hidden="true">→</span>
                           </span>
                         ) : (
                           <a href={`mailto:support@kardofix.com?subject=${encodeURIComponent(service.category)}`}>
@@ -363,10 +414,20 @@ export default function ServicesCatalog() {
                     );
                     const cardId = serviceCategories.find(({ label }) => label === service.category)?.slug;
 
-                    return service.category === "Cleaning & Home Care" ? (
+                    return service.category === "Cleaning & Home Care" || service.category === "Home Tutor" || service.category === "Home Maid" || service.category === "Cooking Services" || service.category === "Nursing Services" ? (
                       <Link
                         className={`${styles.serviceCard} ${styles.serviceCardLink}`}
-                        href="/services/cleaning-home-care"
+                        href={
+                          service.category === "Home Tutor"
+                            ? "/service-providers?service=Home%20Tutor"
+                            : service.category === "Home Maid"
+                              ? "/service-providers?service=Home%20Maid"
+                              : service.category === "Cooking Services"
+                                ? "/service-providers?service=Cooking%20Services"
+                                : service.category === "Nursing Services"
+                                  ? "/service-providers?service=Nursing%20Services"
+                                  : "/services/cleaning-home-care"
+                        }
                         id={cardId}
                         key={service.category}
                         aria-label={`Explore ${service.category} services`}

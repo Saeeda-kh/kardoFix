@@ -2,7 +2,12 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { cleaningServiceNames, serviceProviders } from "@/data/serviceProviders";
+import {
+  cleaningServiceNames,
+  serviceProviders,
+  tutorLevels,
+  type TutorLevel,
+} from "@/data/serviceProviders";
 import styles from "./ServiceProviders.module.scss";
 
 type ServiceProvidersProps = {
@@ -44,6 +49,10 @@ const portraitPalettes = [
   { background: "#E5F1F7", skin: "#F0C09B", hair: "#79513C", clothing: "#487C99" },
 ] as const;
 
+function isTutorLevel(value: string): value is TutorLevel {
+  return tutorLevels.some((level) => level === value);
+}
+
 function ProviderPortrait({ name, index }: { name: string; index: number }) {
   const palette = portraitPalettes[index % portraitPalettes.length];
   const hairStyle = index % 3;
@@ -82,19 +91,53 @@ function ProviderPortrait({ name, index }: { name: string; index: number }) {
 
 export default function ServiceProviders({ initialService }: ServiceProvidersProps) {
   const [serviceQuery, setServiceQuery] = useState(initialService);
+  const [isServiceListOpen, setIsServiceListOpen] = useState(false);
+  const [activeServiceOption, setActiveServiceOption] = useState(0);
+  const [selectedTutorLevel, setSelectedTutorLevel] = useState<TutorLevel | "All levels">("All levels");
+  const [onlineOnly, setOnlineOnly] = useState(false);
   const normalizedQuery = serviceQuery.trim().toLocaleLowerCase();
+  const isTutorSearch = normalizedQuery.includes("tutor");
+  const serviceOptions = useMemo(
+    () => Array.from(new Set(serviceProviders.flatMap((provider) => provider.services))),
+    [],
+  );
+  const matchingServiceOptions = useMemo(
+    () =>
+      serviceOptions
+        .filter((service) => !normalizedQuery || service.toLocaleLowerCase().includes(normalizedQuery))
+        .slice(0, 8),
+    [normalizedQuery, serviceOptions],
+  );
 
   const filteredProviders = useMemo(() => {
-    if (!normalizedQuery) return serviceProviders;
+    return serviceProviders.filter((provider) => {
+      const matchesQuery =
+        !normalizedQuery ||
+        provider.services.some((service) => service.toLocaleLowerCase().includes(normalizedQuery));
+      const matchesTutorLevel =
+        !isTutorSearch ||
+        selectedTutorLevel === "All levels" ||
+        provider.tutorLevels?.includes(selectedTutorLevel);
+      const matchesOnline =
+        !isTutorSearch || !onlineOnly || provider.onlineClasses === true;
+      return matchesQuery && matchesTutorLevel && matchesOnline;
+    });
+  }, [
+    isTutorSearch,
+    normalizedQuery,
+    onlineOnly,
+    selectedTutorLevel,
+  ]);
 
-    return serviceProviders.filter((provider) =>
-      provider.services.some((service) => service.toLocaleLowerCase().includes(normalizedQuery)),
-    );
-  }, [normalizedQuery]);
-
-  const activeService = cleaningServiceNames.find(
-    (service) => service.toLocaleLowerCase() === normalizedQuery,
-  );
+  const activeService = normalizedQuery === "home tutor"
+    ? "Home Tutor"
+    : normalizedQuery === "home maid"
+      ? "Home Maid"
+      : normalizedQuery === "cooking services"
+        ? "Cooking Services"
+        : normalizedQuery === "nursing services"
+          ? "Nursing Services"
+        : cleaningServiceNames.find((service) => service.toLocaleLowerCase() === normalizedQuery);
 
   return (
     <div className={styles.page}>
@@ -109,8 +152,7 @@ export default function ServiceProviders({ initialService }: ServiceProvidersPro
           </nav>
 
           <div className={styles.heroCopy}>
-            <p className={styles.eyebrow}>KARDOFIX PROVIDER DIRECTORY</p>
-            <h1>Find the right professional for your home.</h1>
+            <h2>Find the right professional for your home.</h2>
             <p>Search by service name and explore providers who offer the help you need.</p>
           </div>
 
@@ -122,24 +164,109 @@ export default function ServiceProviders({ initialService }: ServiceProvidersPro
                 <input
                   id="provider-service-search"
                   type="search"
-                  list="provider-service-options"
+                  role="combobox"
+                  aria-autocomplete="list"
+                  aria-expanded={isServiceListOpen && matchingServiceOptions.length > 0}
+                  aria-controls="provider-service-options"
+                  aria-activedescendant={
+                    isServiceListOpen && matchingServiceOptions[activeServiceOption]
+                      ? `provider-service-option-${activeServiceOption}`
+                      : undefined
+                  }
                   placeholder="Try Home Cleaning or Plumbing"
                   value={serviceQuery}
-                  onChange={(event) => setServiceQuery(event.target.value)}
+                  onFocus={() => setIsServiceListOpen(true)}
+                  onBlur={() => setIsServiceListOpen(false)}
+                  onChange={(event) => {
+                    setServiceQuery(event.target.value);
+                    setActiveServiceOption(0);
+                    setIsServiceListOpen(true);
+                  }}
+                  onKeyDown={(event) => {
+                    if (event.key === "ArrowDown" && matchingServiceOptions.length > 0) {
+                      event.preventDefault();
+                      setIsServiceListOpen(true);
+                      setActiveServiceOption((current) => (current + 1) % matchingServiceOptions.length);
+                    } else if (event.key === "ArrowUp" && matchingServiceOptions.length > 0) {
+                      event.preventDefault();
+                      setIsServiceListOpen(true);
+                      setActiveServiceOption((current) =>
+                        (current - 1 + matchingServiceOptions.length) % matchingServiceOptions.length,
+                      );
+                    } else if (event.key === "Enter" && isServiceListOpen && matchingServiceOptions[activeServiceOption]) {
+                      event.preventDefault();
+                      setServiceQuery(matchingServiceOptions[activeServiceOption]);
+                      setIsServiceListOpen(false);
+                    } else if (event.key === "Escape") {
+                      setIsServiceListOpen(false);
+                    }
+                  }}
                   autoComplete="off"
                 />
-                <datalist id="provider-service-options">
-                  {Array.from(new Set(serviceProviders.flatMap((provider) => provider.services))).map((service) => (
-                    <option key={service} value={service} />
-                  ))}
-                </datalist>
+                {isServiceListOpen && matchingServiceOptions.length > 0 && (
+                  <ul className={styles.serviceOptions} id="provider-service-options" role="listbox">
+                    {matchingServiceOptions.map((service, index) => (
+                      <li
+                        className={index === activeServiceOption ? styles.serviceOptionActive : ""}
+                        id={`provider-service-option-${index}`}
+                        key={service}
+                        role="option"
+                        aria-selected={index === activeServiceOption}
+                        onMouseDown={(event) => event.preventDefault()}
+                        onClick={() => {
+                          setServiceQuery(service);
+                          setIsServiceListOpen(false);
+                        }}
+                      >
+                        <SearchIcon />
+                        <span>{service}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </span>
               {serviceQuery && (
-                <button className={styles.clearButton} type="button" onClick={() => setServiceQuery("")}>
+                <button
+                  className={styles.clearButton}
+                  type="button"
+                  onClick={() => {
+                    setServiceQuery("");
+                    setIsServiceListOpen(false);
+                  }}
+                >
                   Clear search
                 </button>
               )}
             </div>
+            {isTutorSearch && (
+              <div className={styles.tutorFilters} aria-label="Filter home tutors">
+                <label className={styles.tutorLevelField}>
+                  <span>Student level or tutor type</span>
+                  <select
+                    value={selectedTutorLevel}
+                    onChange={(event) => {
+                      const level = event.currentTarget.value;
+                      setSelectedTutorLevel(level === "All levels" || isTutorLevel(level) ? level : "All levels");
+                    }}
+                  >
+                    <option value="All levels">All tutor types</option>
+                    {tutorLevels.map((level) => (
+                      <option key={level} value={level}>
+                        {level === "Quran Studies" ? "Quran Tutors" : level}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label className={styles.onlineFilter}>
+                  <input
+                    type="checkbox"
+                    checked={onlineOnly}
+                    onChange={(event) => setOnlineOnly(event.target.checked)}
+                  />
+                  <span>Online classes available</span>
+                </label>
+              </div>
+            )}
             <p className={styles.searchHint}>
               {filteredProviders.length} {filteredProviders.length === 1 ? "provider" : "providers"}
               {activeService ? ` offer ${activeService}` : normalizedQuery ? ` match “${serviceQuery.trim()}”` : " across our service categories"}
@@ -187,6 +314,15 @@ export default function ServiceProviders({ initialService }: ServiceProvidersPro
                     <span className={styles.reviewCount}>({provider.reviewCount} reviews)</span>
                   </div>
                   <p className={styles.providerDescription}>{provider.description}</p>
+                  {provider.category === "Home Tutor" && (
+                    <div className={styles.tutorDetails}>
+                      <p><strong>Teaches:</strong> {provider.tutorLevels?.join(", ")}</p>
+                      <p><strong>Subjects:</strong> {provider.subjects?.join(", ")}</p>
+                      <span className={provider.onlineClasses ? styles.onlineAvailable : styles.onlineUnavailable}>
+                        {provider.onlineClasses ? "Online classes available" : "In-person classes"}
+                      </span>
+                    </div>
+                  )}
                   <div className={styles.providerStats}>
                     <div><span>Experience</span><strong>{provider.experienceYears} years</strong></div>
                     <div><span>Starting price</span><strong>₹{provider.startingPrice.toLocaleString("en-IN")}</strong></div>

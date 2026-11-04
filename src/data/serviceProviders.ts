@@ -7,7 +7,27 @@ export const cleaningServiceNames = [
   "Move-in / Move-out Cleaning",
 ] as const;
 
-export const serviceProviders = [
+export const tutorLevels = ["Kids", "Matriculation", "Senior Studies", "Quran Studies"] as const;
+export type TutorLevel = (typeof tutorLevels)[number];
+
+type ServiceProvider = {
+  id: string;
+  name: string;
+  category: string;
+  location: string;
+  description: string;
+  services: string[];
+  rating: number;
+  reviewCount: number;
+  experienceYears: number;
+  startingPrice: number;
+  featuredReview: string;
+  tutorLevels?: TutorLevel[];
+  subjects?: string[];
+  onlineClasses?: boolean;
+};
+
+export const serviceProviders: ServiceProvider[] = [
   {
     id: "aarav-sharma",
     name: "Aarav Sharma",
@@ -242,4 +262,172 @@ export const serviceProviders = [
     startingPrice: 399,
     featuredReview: "Helpful, dependable support for a few home fixes.",
   },
-] as const;
+  {
+    id: "aisha-khan-tutor",
+    name: "Aisha Khan",
+    category: "Home Tutor",
+    location: "South Delhi",
+    description: "Patient tutor helping young learners build strong foundations through engaging lessons.",
+    services: ["Home Tutor", "Kids Tutoring", "English", "Mathematics"],
+    tutorLevels: ["Kids"],
+    subjects: ["English", "Mathematics", "EVS"],
+    onlineClasses: true,
+    rating: 4.9,
+    reviewCount: 42,
+    experienceYears: 6,
+    startingPrice: 500,
+    featuredReview: "My child is more confident and enjoys learning now.",
+  },
+  {
+    id: "rohan-mehta-tutor",
+    name: "Rohan Mehta",
+    category: "Home Tutor",
+    location: "West Delhi",
+    description: "Experienced matriculation tutor focused on clear concepts and exam preparation.",
+    services: ["Home Tutor", "Matriculation Tutoring", "Mathematics", "Physics", "Chemistry"],
+    tutorLevels: ["Matriculation"],
+    subjects: ["Mathematics", "Physics", "Chemistry"],
+    onlineClasses: true,
+    rating: 4.8,
+    reviewCount: 36,
+    experienceYears: 8,
+    startingPrice: 700,
+    featuredReview: "Excellent explanations and a helpful study plan for exams.",
+  },
+  {
+    id: "sana-iqbal-tutor",
+    name: "Sana Iqbal",
+    category: "Home Tutor",
+    location: "New Delhi",
+    description: "Senior studies tutor for focused subject support and university preparation.",
+    services: ["Home Tutor", "Senior Studies Tutoring", "Biology", "Chemistry", "English"],
+    tutorLevels: ["Senior Studies"],
+    subjects: ["Biology", "Chemistry", "English"],
+    onlineClasses: false,
+    rating: 4.9,
+    reviewCount: 28,
+    experienceYears: 7,
+    startingPrice: 900,
+    featuredReview: "Structured sessions helped me improve my grades significantly.",
+  },
+  {
+    id: "umar-farooq-tutor",
+    name: "Umar Farooq",
+    category: "Home Tutor",
+    location: "Central Delhi",
+    description: "Quran tutor offering supportive lessons in recitation, tajweed, and memorization.",
+    services: ["Home Tutor", "Quran Tutoring", "Quran Recitation", "Tajweed"],
+    tutorLevels: ["Kids", "Quran Studies"],
+    subjects: ["Quran Recitation", "Tajweed", "Memorization"],
+    onlineClasses: true,
+    rating: 5.0,
+    reviewCount: 31,
+    experienceYears: 9,
+    startingPrice: 600,
+    featuredReview: "Kind, knowledgeable, and makes every lesson easy to follow.",
+  },
+  {
+    id: "sunita-devi-maid",
+    name: "Sunita Devi",
+    category: "Home Maid",
+    location: "South Delhi",
+    description: "Reliable home help for regular household routines and everyday upkeep.",
+    services: ["Home Maid", "Daily household tasks", "Home tidying"],
+    rating: 4.9,
+    reviewCount: 53,
+    experienceYears: 7,
+    startingPrice: 8000,
+    featuredReview: "Consistent, trustworthy help that makes our daily routine easier.",
+  },
+  {
+    id: "rekha-sharma-maid",
+    name: "Rekha Sharma",
+    category: "Home Maid",
+    location: "West Delhi",
+    description: "Task-based home assistance for cleaning, dishes, laundry, and other chores.",
+    services: ["Home Maid", "Kitchen help", "Laundry"],
+    rating: 4.8,
+    reviewCount: 37,
+    experienceYears: 5,
+    startingPrice: 250,
+    featuredReview: "The requested tasks were completed carefully and on time.",
+  },
+  {
+    id: "meena-kumari-maid",
+    name: "Meena Kumari",
+    category: "Home Maid",
+    location: "Central Delhi",
+    description: "Flexible home support for cooking, tidying, and household chores.",
+    services: ["Home Maid", "Cooking", "Home tidying"],
+    rating: 4.9,
+    reviewCount: 41,
+    experienceYears: 6,
+    startingPrice: 150,
+    featuredReview: "Flexible and thoughtful help whenever we need an extra hand.",
+  },
+  {
+    id: "raj-kapoor-chef",
+    name: "Raj Kapoor",
+    category: "Cooking Services",
+    location: "South Delhi",
+    description: "Experienced home chef preparing fresh North Indian meals for families and small gatherings.",
+    services: ["Cooking Services", "Home Chef", "North Indian Cuisine"],
+    rating: 4.9,
+    reviewCount: 68,
+    experienceYears: 9,
+    startingPrice: 1200,
+    featuredReview: "The food was delicious, and the chef followed our preferences perfectly.",
+  },
+  {
+    id: "farah-siddiqui-chef",
+    name: "Farah Siddiqui",
+    category: "Cooking Services",
+    location: "Central Delhi",
+    description: "Home cook specializing in everyday family meals and vegetarian dishes.",
+    services: ["Cooking Services", "Home Cook", "Vegetarian Meals"],
+    rating: 4.8,
+    reviewCount: 54,
+    experienceYears: 7,
+    startingPrice: 14000,
+    featuredReview: "Reliable monthly service with tasty home-style meals.",
+  },
+  {
+    id: "neeraj-verma-chef",
+    name: "Neeraj Verma",
+    category: "Cooking Services",
+    location: "West Delhi",
+    description: "Professional cook for family meals, special occasions, and multi-cuisine cooking.",
+    services: ["Cooking Services", "Home Chef", "Multi-cuisine"],
+    rating: 4.9,
+    reviewCount: 47,
+    experienceYears: 11,
+    startingPrice: 1500,
+    featuredReview: "Professional, punctual, and flexible with our menu requests.",
+  },
+  {
+    id: "priya-shah-nurse",
+    name: "Priya Shah",
+    category: "Nursing Services",
+    location: "South Delhi",
+    description: "Registered nursing professional providing attentive in-home support and routine care.",
+    services: ["Nursing Services", "Home Nursing", "Elderly Care"],
+    rating: 4.9,
+    reviewCount: 34,
+    experienceYears: 8,
+    startingPrice: 1000,
+    featuredReview: "Kind, attentive care and clear communication with our family.",
+  },
+  {
+    id: "daniel-mathew-nurse",
+    name: "Daniel Mathew",
+    category: "Nursing Services",
+    location: "Central Delhi",
+    description: "Experienced nursing professional offering post-hospital and in-home patient support.",
+    services: ["Nursing Services", "Patient Care", "Post-hospital Care"],
+    rating: 4.8,
+    reviewCount: 29,
+    experienceYears: 7,
+    startingPrice: 1200,
+    featuredReview: "Professional, patient, and supportive throughout the care visit.",
+  },
+];

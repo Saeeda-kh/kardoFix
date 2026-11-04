@@ -11,5 +11,9 @@ export const serviceCategories = [
   { label: "Beauty & Wellness", slug: "beauty-wellness", href: "/services#beauty-wellness" },
   { label: "Packers & Movers", slug: "packers-movers", href: "/services#packers-movers" },
   { label: "Events & Occasions", slug: "events-occasions", href: "/services#events-occasions" },
+  { label: "Home Tutor", slug: "home-tutor", href: "/service-providers?service=Home%20Tutor" },
+  { label: "Home Maid", slug: "home-maid", href: "/service-providers?service=Home%20Maid" },
+  { label: "Cooking Services", slug: "cooking-services", href: "/service-providers?service=Cooking%20Services" },
+  { label: "Nursing Services", slug: "nursing-services", href: "/service-providers?service=Nursing%20Services" },
   { label: "Other Services", slug: "other-services", href: "/services#other-services" },
 ] as const;

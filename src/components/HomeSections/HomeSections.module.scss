@@ -135,6 +135,24 @@
   color: #b86b2c;
 }
 
+.serviceIcon-tutor {
+  border-color: #cdd5fa;
+  background: linear-gradient(145deg, #f0f2ff, #dce2ff);
+  color: #5869c8;
+}
+
+.serviceIcon-maid {
+  border-color: #c9e8d8;
+  background: linear-gradient(145deg, #effbf5, #d9f3e5);
+  color: #398a72;
+}
+
+.serviceIcon-cooking {
+  border-color: #f3d9ab;
+  background: linear-gradient(145deg, #fff8e9, #ffedc7);
+  color: #bf7a1b;
+}
+
 .serviceCardContent {
   display: grid;
   gap: 3px;

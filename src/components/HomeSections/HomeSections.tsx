@@ -7,9 +7,11 @@ const services = [
   ["ac", "AC Technician", "₹499"],
   ["plumbing", "Plumber", "₹399"],
   ["electrical", "Electrician", "₹299"],
-  ["cleaning", "Home Maid", "₹699"],
+  ["maid", "Home Maid", "₹150"],
+  ["cooking", "Cooking Services", "₹1200"],
   ["painting", "Painting", "₹999"],
   ["carpentry", "Carpentry", "₹499"],
+  ["tutor", "Home Tutor", "₹500"],
 ];
 
 const reasons = [
@@ -33,6 +35,9 @@ function ServiceIcon({ type }: { type: string }) {
     cleaning: <><path d="m14 4 6 6M12 6l8 8M5 19l6-6M3 21l3-3M15 3l2-2" /><path d="M4 14 2 12l4-4 2 2" /></>,
     painting: <><path d="m14 4 6 6-9 9H5v-6l9-9Z" /><path d="m12 6 6 6M5 19l-2 2" /></>,
     carpentry: <><path d="m14.5 5.5 4 4M4 20l7.5-7.5M3 21l3-1 9-9-2-2-9 9-1 3Z" /><path d="m14 3 3-1 4 4-1 3" /></>,
+    tutor: <><path d="m2 9 10-5 10 5-10 5L2 9Z" /><path d="M6 11v5c3.5 2.8 8.5 2.8 12 0v-5m4-2v7" /></>,
+    maid: <><path d="M8 11a4 4 0 1 0 8 0 4 4 0 0 0-8 0Z" /><path d="M4 21c.7-4.2 3.3-6.3 8-6.3s7.3 2.1 8 6.3M17 4l3 3m-2-4 3 3" /></>,
+    cooking: <><path d="M4 12h16l-1 8H5l-1-8Z" /><path d="M3 12a9 9 0 0 1 18 0M9 5c-1-2 1-2 0-4m6 4c-1-2 1-2 0-4" /></>,
   };
 
   return (
@@ -53,38 +58,63 @@ export default function HomeSections() {
           <Link href="/services">View all services <span aria-hidden="true">→</span></Link>
         </div>
         <div className={styles.serviceGrid}>
-          {services.map(([icon, name, price]) => (
-            <article className={styles.serviceCard} key={name}>
-              {icon === "ac" || icon === "plumbing" || icon === "electrical" || icon === "cleaning" || icon === "painting" ? (
-                <Image
-                  className={styles.serviceIconImage}
-                  src={
-                    icon === "ac"
-                      ? "/ac_repair_service_icon.jpg"
-                      : icon === "plumbing"
-                        ? "/plumbing_icon_v2.png"
-                        : icon === "electrical"
-                          ? "/electrical_icon.png"
-                          : icon === "cleaning"
-                            ? "/home_maid_icon.png"
-                            : "/painting_icon.png"
-                  }
-                  alt=""
-                  width={100}
-                  height={80}
-                />
-              ) : (
-                <div className={`${styles.serviceIcon} ${styles[`serviceIcon-${icon}`]}`}>
-                  <ServiceIcon type={icon} />
+          {services.map(([icon, name, price]) => {
+            const cardContent = (
+              <>
+                {icon === "ac" || icon === "plumbing" || icon === "electrical" || icon === "cleaning" || icon === "painting" ? (
+                  <Image
+                    className={styles.serviceIconImage}
+                    src={
+                      icon === "ac"
+                        ? "/ac_repair_service_icon.jpg"
+                        : icon === "plumbing"
+                          ? "/plumbing_icon_v2.png"
+                          : icon === "electrical"
+                            ? "/electrical_icon.png"
+                            : icon === "cleaning"
+                              ? "/home_maid_icon.png"
+                              : "/painting_icon.png"
+                    }
+                    alt=""
+                    width={100}
+                    height={80}
+                  />
+                ) : (
+                  <div className={`${styles.serviceIcon} ${styles[`serviceIcon-${icon}`]}`}>
+                    <ServiceIcon type={icon} />
+                  </div>
+                )}
+                <div className={styles.serviceCardContent}>
+                  <h3>{name}</h3>
+                  <small>Starting from</small>
+                  <strong>{price}</strong>
                 </div>
-              )}
-              <div className={styles.serviceCardContent}>
-                <h3>{name}</h3>
-                <small>Starting from</small>
-                <strong>{price}</strong>
-              </div>
-            </article>
-          ))}
+              </>
+            );
+
+            const serviceHref = icon === "tutor"
+              ? "/service-providers?service=Home%20Tutor"
+              : icon === "maid"
+                ? "/service-providers?service=Home%20Maid"
+                : icon === "cooking"
+                  ? "/service-providers?service=Cooking%20Services"
+                  : null;
+
+            return serviceHref ? (
+              <Link
+                className={styles.serviceCard}
+                href={serviceHref}
+                key={name}
+                aria-label={`Explore ${name}`}
+              >
+                {cardContent}
+              </Link>
+            ) : (
+              <article className={styles.serviceCard} key={name}>
+                {cardContent}
+              </article>
+            );
+          })}
         </div>
       </section>
 
