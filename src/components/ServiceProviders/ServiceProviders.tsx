@@ -302,6 +302,12 @@ export default function ServiceProviders({ initialService }: ServiceProvidersPro
             <div className={styles.providerGrid}>
               {filteredProviders.map((provider, index) => (
                 <article className={styles.providerCard} key={provider.id}>
+                  <Link
+                    className={styles.providerCardLink}
+                    href={`/service-providers/${provider.id}`}
+                    aria-label={`View ${provider.name} profile`}
+                    tabIndex={-1}
+                  />
                   <div className={styles.providerHeader}>
                     <ProviderPortrait name={provider.name} index={index} />
                     <div className={styles.providerIdentity}>
@@ -343,11 +349,9 @@ export default function ServiceProviders({ initialService }: ServiceProvidersPro
                       <LocationIcon />
                       {provider.location}
                     </span>
-                    <a
-                      href={`mailto:support@kardofix.com?subject=${encodeURIComponent(`Request service from ${provider.name}`)}&body=${encodeURIComponent(`Hello KardoFix, I would like to request a service from ${provider.name}. Services offered: ${provider.services.join(", ")}.`)}`}
-                    >
-                      Request service <span aria-hidden="true">→</span>
-                    </a>
+                    <Link href={`/service-providers/${provider.id}`}>
+                      View profile <span aria-hidden="true">→</span>
+                    </Link>
                   </div>
                 </article>
               ))}
