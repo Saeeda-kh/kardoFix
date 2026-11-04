@@ -1,0 +1,483 @@
+.page {
+  color: #14284b;
+  background: #fff;
+}
+
+.container {
+  width: min(1200px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.hero {
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 82% 43%, rgba(196, 224, 255, 0.6), transparent 34%),
+    linear-gradient(115deg, #f3f8ff 0%, #fbfcff 54%, #f0f6ff 100%);
+  border-bottom: 1px solid #e8edf5;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 20px;
+  color: #718099;
+  font-size: 0.78rem;
+}
+
+.breadcrumb a:hover {
+  color: #075ddd;
+}
+
+.heroContent {
+  display: grid;
+  min-height: 480px;
+  grid-template-columns: 1fr 0.9fr;
+  align-items: center;
+  gap: 30px;
+  padding: 18px 0 42px;
+}
+
+.heroCopy {
+  position: relative;
+  z-index: 1;
+  padding: 24px 0;
+}
+
+.eyebrow {
+  margin-bottom: 11px;
+  color: #0960dc;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+}
+
+.heroCopy h1 {
+  max-width: 620px;
+  color: #102751;
+  font-size: clamp(2.8rem, 5vw, 4.45rem);
+  line-height: 1.04;
+  letter-spacing: -0.06em;
+}
+
+.heroDescription {
+  max-width: 535px;
+  margin-top: 18px;
+  color: #5b6880;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+.primaryButton,
+.secondaryButton {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 19px;
+  border-radius: 9px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.primaryButton {
+  background: linear-gradient(135deg, #1268ee, #0752cf);
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(13, 87, 211, 0.2);
+}
+
+.primaryButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 11px 22px rgba(13, 87, 211, 0.26);
+}
+
+.secondaryButton {
+  border: 1px solid #d5deeb;
+  background: rgba(255, 255, 255, 0.76);
+  color: #203452;
+}
+
+.secondaryButton:hover {
+  background: #fff;
+  transform: translateY(-2px);
+}
+
+.assurance {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin-top: 27px;
+}
+
+.assurance > span {
+  display: grid;
+  width: 35px;
+  height: 35px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 11px;
+  background: #e4f5ef;
+  color: #25886c;
+}
+
+.assurance svg {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.assurance p,
+.visualNote p {
+  display: grid;
+  gap: 3px;
+}
+
+.assurance strong,
+.visualNote strong {
+  color: #203452;
+  font-size: 0.77rem;
+}
+
+.assurance small,
+.visualNote small {
+  color: #748199;
+  font-size: 0.7rem;
+}
+
+.heroVisual {
+  position: relative;
+  display: grid;
+  min-height: 390px;
+  place-items: center;
+}
+
+.heroVisual > img {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 440px);
+  height: auto;
+  mix-blend-mode: multiply;
+}
+
+.visualGlow {
+  position: absolute;
+  width: min(78%, 350px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(170, 212, 247, 0.42), rgba(219, 237, 255, 0.12) 67%, transparent 70%);
+}
+
+.visualNote {
+  position: absolute;
+  right: 0;
+  bottom: 30px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 15px;
+  border: 1px solid rgba(226, 233, 243, 0.92);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 12px 28px rgba(27, 55, 96, 0.1);
+}
+
+.visualNote > span {
+  color: #efa943;
+  font-size: 1.35rem;
+}
+
+.servicesSection {
+  padding: 68px 0 74px;
+}
+
+.sectionHeading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 25px;
+  margin-bottom: 25px;
+}
+
+.sectionHeading .eyebrow {
+  margin-bottom: 6px;
+}
+
+.sectionHeading h2,
+.processSection h2 {
+  color: #14284b;
+  font-size: clamp(1.7rem, 3vw, 2.2rem);
+  letter-spacing: -0.045em;
+}
+
+.sectionHeading > p {
+  max-width: 390px;
+  color: #65728a;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.serviceGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.serviceCard {
+  display: flex;
+  min-height: 220px;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 22px;
+  border: 1px solid #e3e9f2;
+  border-radius: 14px;
+  background: linear-gradient(150deg, #fff, #fbfcff);
+  box-shadow: 0 5px 16px rgba(24, 50, 90, 0.035);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.serviceCardLink {
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.serviceCardLink:focus-visible {
+  outline: 3px solid rgba(18, 104, 238, 0.38);
+  outline-offset: 3px;
+}
+
+.serviceCard:hover {
+  transform: translateY(-3px);
+  border-color: #c9dafa;
+  box-shadow: 0 12px 26px rgba(28, 62, 112, 0.09);
+}
+
+.serviceIcon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  margin-bottom: 15px;
+  place-items: center;
+  border-radius: 12px;
+  background: #edf4ff;
+  color: #1761c9;
+}
+
+.serviceIcon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.serviceCard h3 {
+  color: #17294b;
+  font-size: 0.95rem;
+}
+
+.serviceCard p {
+  margin: 8px 0 15px;
+  color: #65728a;
+  font-size: 0.79rem;
+  line-height: 1.55;
+}
+
+.serviceAction {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: auto;
+  color: #075ddd;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.serviceAction > span {
+  display: inline-block;
+  transition: transform 0.18s ease;
+}
+
+.serviceCardLink:hover .serviceAction > span {
+  transform: translateX(3px);
+}
+
+.processSection {
+  padding: 58px 0 66px;
+  background: #f5f8fd;
+  text-align: center;
+}
+
+.processSection .eyebrow {
+  margin-bottom: 7px;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin: 30px 0;
+  text-align: left;
+}
+
+.steps article {
+  padding: 20px;
+  border: 1px solid #e4eaf3;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.steps article > span {
+  color: #1268ee;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.steps h3 {
+  margin-top: 10px;
+  color: #17294b;
+  font-size: 0.94rem;
+}
+
+.steps p {
+  margin-top: 6px;
+  color: #65728a;
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+@media (max-width: 800px) {
+  .heroContent {
+    min-height: 0;
+    grid-template-columns: 1fr 0.8fr;
+    gap: 10px;
+  }
+
+  .heroVisual {
+    min-height: 320px;
+  }
+
+  .visualNote {
+    right: -5px;
+  }
+
+  .serviceGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    width: min(100% - 32px, 1200px);
+  }
+
+  .breadcrumb {
+    flex-wrap: wrap;
+    gap: 7px;
+    padding-top: 15px;
+    font-size: 0.7rem;
+  }
+
+  .heroContent {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: 18px 0 28px;
+  }
+
+  .heroCopy {
+    padding: 20px 0 8px;
+  }
+
+  .heroCopy h1 {
+    font-size: clamp(2.5rem, 11vw, 3.5rem);
+  }
+
+  .heroDescription {
+    margin-top: 12px;
+    font-size: 0.9rem;
+  }
+
+  .heroActions {
+    gap: 9px;
+    margin-top: 19px;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    min-height: 45px;
+    padding: 0 13px;
+    font-size: 0.76rem;
+  }
+
+  .assurance {
+    margin-top: 20px;
+  }
+
+  .heroVisual {
+    min-height: 250px;
+  }
+
+  .heroVisual > img {
+    width: min(78%, 280px);
+  }
+
+  .visualNote {
+    right: 0;
+    bottom: 10px;
+  }
+
+  .servicesSection {
+    padding: 48px 0 52px;
+  }
+
+  .sectionHeading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 19px;
+  }
+
+  .sectionHeading > p {
+    font-size: 0.82rem;
+  }
+
+  .serviceGrid,
+  .steps {
+    grid-template-columns: 1fr;
+    gap: 11px;
+  }
+
+  .serviceCard {
+    min-height: 190px;
+    padding: 18px;
+  }
+
+  .processSection {
+    padding: 45px 0 50px;
+  }
+
+  .steps {
+    margin: 22px 0;
+    text-align: left;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .primaryButton,
+  .secondaryButton,
+  .serviceCard,
+  .serviceAction > span {
+    transition: none;
+  }
+}

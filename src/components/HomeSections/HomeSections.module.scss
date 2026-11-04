@@ -1,0 +1,318 @@
+.sections {
+  width: min(1320px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 58px 0 34px;
+  color: #102751;
+}
+
+.services {
+  padding-bottom: 20px;
+}
+
+.sectionHeading,
+.panelHeading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.kicker {
+  margin-bottom: 8px;
+  color: #0f5bd8;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.sections h2 {
+  color: #102751;
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  letter-spacing: -0.04em;
+}
+
+.sectionHeading a,
+.panelHeading a {
+  padding-bottom: 4px;
+  color: #075ddd;
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+
+.serviceGrid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.serviceCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 166px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 24px 16px 20px;
+  border: 1px solid rgba(218, 228, 242, 0.9);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 12px 26px rgba(21, 56, 104, 0.07);
+  text-align: center;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.serviceCard:hover {
+  transform: translateY(-6px);
+  border-color: #b9d2f3;
+  box-shadow: 0 18px 34px rgba(21, 56, 104, 0.14);
+}
+
+.serviceIcon {
+  display: grid;
+  width: 62px;
+  height: 62px;
+  margin-bottom: 12px;
+  place-items: center;
+  border: 1px solid transparent;
+  border-radius: 18px;
+  color: #1265d7;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.serviceIcon svg {
+  width: 29px;
+  height: 29px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+
+.serviceIconImage {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 12px;
+  object-fit: contain;
+}
+
+.serviceIcon-ac {
+  border-color: #c9e5f7;
+  background: linear-gradient(145deg, #e9f9ff, #cceeff);
+  color: #1487c5;
+}
+
+.serviceIcon-plumbing {
+  border-color: #c9d9fa;
+  background: linear-gradient(145deg, #edf1ff, #d5e0ff);
+  color: #416de0;
+}
+
+.serviceIcon-electrical {
+  border-color: #f5d58e;
+  background: linear-gradient(145deg, #fff8dc, #ffe7a8);
+  color: #db8b08;
+}
+
+.serviceIcon-cleaning {
+  border-color: #bfeadd;
+  background: linear-gradient(145deg, #eafff7, #c9f2e3);
+  color: #159b76;
+}
+
+.serviceIcon-painting {
+  border-color: #f3c8d9;
+  background: linear-gradient(145deg, #fff0f6, #fbd5e5);
+  color: #d65283;
+}
+
+.serviceIcon-carpentry {
+  border-color: #e9c6a3;
+  background: linear-gradient(145deg, #fff3e6, #f8d9bb);
+  color: #b86b2c;
+}
+
+.serviceIcon-tutor {
+  border-color: #cdd5fa;
+  background: linear-gradient(145deg, #f0f2ff, #dce2ff);
+  color: #5869c8;
+}
+
+.serviceIcon-maid {
+  border-color: #c9e8d8;
+  background: linear-gradient(145deg, #effbf5, #d9f3e5);
+  color: #398a72;
+}
+
+.serviceIcon-cooking {
+  border-color: #f3d9ab;
+  background: linear-gradient(145deg, #fff8e9, #ffedc7);
+  color: #bf7a1b;
+}
+
+.serviceCardContent {
+  display: grid;
+  gap: 3px;
+}
+
+.serviceCard h3 {
+  font-size: 0.88rem;
+}
+
+.serviceCard small {
+  margin-top: 8px;
+  color: #65728a;
+  font-size: 0.7rem;
+}
+
+.serviceCard strong {
+  color: #0861dd;
+  font-size: 1.05rem;
+}
+
+.insights {
+  display: grid;
+  grid-template-columns: 0.9fr 1.7fr;
+  gap: 28px;
+  margin-top: 28px;
+}
+
+.reasonPanel,
+.reviewPanel {
+  padding: 22px;
+  border: 1px solid #e5eaf3;
+  border-radius: 14px;
+  background: #fbfdff;
+}
+
+.reasonPanel ul {
+  display: grid;
+  gap: 13px;
+  margin-top: 18px;
+  list-style: none;
+}
+
+.reasonPanel li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.reasonIcon {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 8px;
+  background: #e9f2ff;
+  color: #0f5bd8;
+}
+
+.reasonPanel li span:last-child {
+  display: grid;
+  gap: 3px;
+}
+
+.reasonPanel small {
+  color: #66738a;
+  font-size: 0.68rem;
+}
+
+.reviewGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.reviewGrid blockquote {
+  min-height: 160px;
+  padding: 15px;
+  border: 1px solid #e4e9f2;
+  border-radius: 11px;
+  background: white;
+}
+
+.stars {
+  color: #f68a0a;
+  letter-spacing: 2px;
+}
+
+.reviewGrid blockquote p {
+  margin: 11px 0;
+  color: #52617a;
+  font-size: 0.72rem;
+  line-height: 1.5;
+}
+
+.reviewGrid blockquote footer {
+  display: grid;
+  gap: 2px;
+  font-size: 0.7rem;
+}
+
+.reviewGrid blockquote footer small {
+  color: #7c8798;
+}
+
+.brands {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 28px;
+  padding: 21px 28px;
+  border: 1px solid #e5eaf3;
+  border-radius: 12px;
+  color: #162b4e;
+}
+
+.brands > span {
+  color: #60708a;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.brands strong {
+  font-size: 1.2rem;
+}
+
+@media (max-width: 900px) {
+  .serviceGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .insights {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .sections {
+    width: min(100% - 32px, 1320px);
+    padding-top: 38px;
+  }
+
+  .serviceGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .serviceCard {
+    min-height: 150px;
+  }
+
+  .reviewGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .brands {
+    justify-content: center;
+  }
+}
