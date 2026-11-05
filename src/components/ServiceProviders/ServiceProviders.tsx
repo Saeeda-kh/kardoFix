@@ -113,6 +113,7 @@ export default function ServiceProviders({ initialService }: ServiceProvidersPro
     return serviceProviders.filter((provider) => {
       const matchesQuery =
         !normalizedQuery ||
+        provider.category.toLocaleLowerCase().includes(normalizedQuery) ||
         provider.services.some((service) => service.toLocaleLowerCase().includes(normalizedQuery));
       const matchesTutorLevel =
         !isTutorSearch ||

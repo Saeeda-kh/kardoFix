@@ -397,7 +397,7 @@ export default function ServicesCatalog() {
                         </div>
                         <h3>{service.category}</h3>
                         <p>{service.description}</p>
-                        {service.category === "Cleaning & Home Care" || service.category === "Home Tutor" || service.category === "Home Maid" || service.category === "Cooking Services" || service.category === "Nursing Services" ? (
+                        {service.category === "Cleaning & Home Care" || service.category === "Plumbing" || service.category === "Electrical" || service.category === "Home Tutor" || service.category === "Home Maid" || service.category === "Cooking Services" || service.category === "Nursing Services" ? (
                           <span className={styles.cardAction}>
                             {service.category === "Home Tutor"
                               ? "Explore Tutors"
@@ -414,19 +414,23 @@ export default function ServicesCatalog() {
                     );
                     const cardId = serviceCategories.find(({ label }) => label === service.category)?.slug;
 
-                    return service.category === "Cleaning & Home Care" || service.category === "Home Tutor" || service.category === "Home Maid" || service.category === "Cooking Services" || service.category === "Nursing Services" ? (
+                    return service.category === "Cleaning & Home Care" || service.category === "Plumbing" || service.category === "Electrical" || service.category === "Home Tutor" || service.category === "Home Maid" || service.category === "Cooking Services" || service.category === "Nursing Services" ? (
                       <Link
                         className={`${styles.serviceCard} ${styles.serviceCardLink}`}
                         href={
-                          service.category === "Home Tutor"
-                            ? "/service-providers?service=Home%20Tutor"
-                            : service.category === "Home Maid"
-                              ? "/service-providers?service=Home%20Maid"
-                              : service.category === "Cooking Services"
-                                ? "/service-providers?service=Cooking%20Services"
-                                : service.category === "Nursing Services"
-                                  ? "/service-providers?service=Nursing%20Services"
-                                  : "/services/cleaning-home-care"
+                          service.category === "Plumbing"
+                            ? "/services/plumbing"
+                            : service.category === "Electrical"
+                              ? "/services/electrical"
+                              : service.category === "Home Tutor"
+                              ? "/service-providers?service=Home%20Tutor"
+                              : service.category === "Home Maid"
+                                ? "/service-providers?service=Home%20Maid"
+                                : service.category === "Cooking Services"
+                                  ? "/service-providers?service=Cooking%20Services"
+                                  : service.category === "Nursing Services"
+                                    ? "/service-providers?service=Nursing%20Services"
+                                    : "/services/cleaning-home-care"
                         }
                         id={cardId}
                         key={service.category}
