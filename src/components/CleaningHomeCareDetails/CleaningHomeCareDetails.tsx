@@ -1,40 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
-import { cleaningServiceNames } from "@/data/serviceProviders";
+import { getServiceOfferings } from "@/lib/marketplace";
 import styles from "./CleaningHomeCareDetails.module.scss";
 
-const cleaningServices = [
-  {
-    title: "Home Cleaning",
-    description: "A thoughtful clean for everyday rooms, surfaces, and floors.",
-    icon: "home",
-  },
-  {
-    title: "Deep Cleaning",
-    description: "A detailed top-to-bottom clean for the places that need extra care.",
-    icon: "sparkle",
-  },
-  {
-    title: "Kitchen Cleaning",
-    description: "Help with countertops, cabinets, appliances, and hard-to-reach areas.",
-    icon: "kitchen",
-  },
-  {
-    title: "Bathroom Cleaning",
-    description: "Refresh bathroom surfaces, fixtures, tiles, and floors.",
-    icon: "bathroom",
-  },
-  {
-    title: "Sofa & Upholstery",
-    description: "Care for sofas and upholstered furniture to lift everyday dust and dirt.",
-    icon: "sofa",
-  },
-  {
-    title: "Move-in / Move-out Cleaning",
-    description: "Prepare a home for its next chapter with a detailed clean.",
-    icon: "moving",
-  },
-] satisfies { title: (typeof cleaningServiceNames)[number]; description: string; icon: string }[];
+const cleaningIcons: Record<string, string> = {
+  "Home Cleaning": "home",
+  "Deep Cleaning": "sparkle",
+  "Kitchen Cleaning": "kitchen",
+  "Bathroom Cleaning": "bathroom",
+  "Sofa & Upholstery": "sofa",
+  "Move-in / Move-out Cleaning": "moving",
+};
 
 function CleaningServiceIcon({ name }: { name: string }) {
   const props = {
@@ -63,7 +39,9 @@ function CleaningServiceIcon({ name }: { name: string }) {
   }
 }
 
-export default function CleaningHomeCareDetails() {
+export default async function CleaningHomeCareDetails() {
+  const cleaningServices = await getServiceOfferings("cleaning-home-care");
+
   return (
     <div className={styles.page}>
       <section className={styles.hero}>
@@ -128,12 +106,12 @@ export default function CleaningHomeCareDetails() {
             {cleaningServices.map((service) => (
               <Link
                 className={`${styles.serviceCard} ${styles.serviceCardLink}`}
-                href={`/service-providers?service=${encodeURIComponent(service.title)}&category=${encodeURIComponent("Cleaning & Home Care")}`}
-                key={service.title}
-                aria-label={`Find providers for ${service.title}`}
+                href={`/service-providers?service=${encodeURIComponent(service.name)}&category=${encodeURIComponent("Cleaning & Home Care")}`}
+                key={service.id}
+                aria-label={`Find providers for ${service.name}`}
               >
-                <span className={styles.serviceIcon}><CleaningServiceIcon name={service.icon} /></span>
-                <h3>{service.title}</h3>
+                <span className={styles.serviceIcon}><CleaningServiceIcon name={cleaningIcons[service.name] ?? "moving"} /></span>
+                <h3>{service.name}</h3>
                 <p>{service.description}</p>
                 <span className={styles.serviceAction}>
                   Find providers <span aria-hidden="true">→</span>

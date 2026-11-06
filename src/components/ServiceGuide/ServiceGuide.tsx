@@ -1,10 +1,10 @@
 import Link from "next/link";
-import type { ServiceGuide } from "@/data/serviceGuides";
-import { serviceProviders } from "@/data/serviceProviders";
+import type { MarketplaceGuide } from "@/data/marketplace";
 import styles from "./ServiceGuide.module.scss";
 
 type ServiceGuidePageProps = {
-  guide: ServiceGuide;
+  guide: MarketplaceGuide;
+  hasProviders: boolean;
 };
 
 function SparkIcon() {
@@ -55,8 +55,7 @@ function CheckIcon() {
   return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6" /></svg>;
 }
 
-export default function ServiceGuidePage({ guide }: ServiceGuidePageProps) {
-  const hasProviders = serviceProviders.some((item) => item.category === guide.category);
+export default function ServiceGuidePage({ guide, hasProviders }: ServiceGuidePageProps) {
   const providerHref = hasProviders
     ? `/service-providers?service=${encodeURIComponent(guide.category)}`
     : "/service-providers";
@@ -119,7 +118,11 @@ export default function ServiceGuidePage({ guide }: ServiceGuidePageProps) {
                   <h3>{offering.name}</h3>
                   <p>{offering.description}</p>
                   <div className={styles.offerBottom}>
-                    <span>Sample estimate from <strong>₹{offering.startingPrice.toLocaleString("en-IN")}</strong></span>
+                    <span>
+                      {offering.startingPrice === null
+                        ? "Request an estimate"
+                        : <>Sample estimate from <strong>₹{offering.startingPrice.toLocaleString("en-IN")}</strong></>}
+                    </span>
                     <span className={styles.offerExplore}>Explore <span aria-hidden="true">→</span></span>
                   </div>
                 </>

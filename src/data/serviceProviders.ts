@@ -15,12 +15,14 @@ export type ServiceProvider = {
   name: string;
   category: string;
   location: string;
+  businessLatitude?: number | null;
+  businessLongitude?: number | null;
   description: string;
   services: string[];
   rating: number;
   reviewCount: number;
   experienceYears: number;
-  startingPrice: number;
+  startingPrice: number | null;
   featuredReview: string;
   tutorLevels?: TutorLevel[];
   subjects?: string[];

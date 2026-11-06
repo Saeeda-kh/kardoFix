@@ -1,0 +1,22 @@
+.page { display: grid; width: min(1050px, calc(100% - 40px)); min-height: 65vh; grid-template-columns: minmax(0, 1.25fr) minmax(280px, .75fr); align-content: start; gap: 18px; margin: 0 auto; padding: 48px 0 80px; color: #172b4c; }
+.welcome,.infoCard { padding: 27px; border: 1px solid #e3eaf3; border-radius: 17px; background: #fff; box-shadow: 0 8px 26px rgba(27, 55, 96, .045); }
+.welcome { background: linear-gradient(135deg, #f8fbff, #fff); }
+.eyebrow { color: #2464bd; font-size: .68rem; font-weight: 800; letter-spacing: .13em; }
+.welcome h1 { margin-top: 10px; color: #142b4c; font-size: clamp(1.9rem, 4vw, 2.7rem); letter-spacing: -.05em; }
+.welcome > p:last-of-type { max-width: 580px; margin-top: 13px; color: #65748c; font-size: .84rem; line-height: 1.65; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.primaryAction,.secondaryAction { display: inline-flex; min-height: 43px; align-items: center; justify-content: center; padding: 0 14px; border-radius: 10px; font-size: .75rem; font-weight: 750; }
+.primaryAction { background: #1769df; color: #fff; }
+.secondaryAction { border: 1px solid #d5e0ef; background: #f7faff; color: #205eb2; }
+.infoCard h2 { color: #203653; font-size: 1rem; }
+.infoCard > p { margin: 12px 0 18px; color: #65748c; font-size: .76rem; line-height: 1.6; }
+.infoCard dl { display: grid; gap: 11px; margin: 20px 0; }
+.infoCard dl div { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding-bottom: 10px; border-bottom: 1px solid #edf1f6; font-size: .72rem; }
+.infoCard dt { color: #8290a3; }
+.infoCard dd { color: #364c69; font-weight: 650; text-align: right; overflow-wrap: anywhere; }
+.privatePhoto { display: block; width: min(220px, 100%); max-height: 240px; border-radius: 10px; object-fit: cover; }
+
+@media (max-width: 720px) {
+  .page { width: min(100% - 28px, 600px); grid-template-columns: 1fr; padding: 28px 0 56px; }
+  .welcome,.infoCard { padding: 21px; }
+}

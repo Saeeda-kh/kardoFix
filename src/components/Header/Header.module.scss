@@ -340,6 +340,27 @@
   font-weight: 600;
 }
 
+.accountLink {
+  color: #0f4ac5;
+  padding: 0.75rem 0.85rem;
+  border-radius: 9px;
+  background: #edf4ff;
+  font-size: .82rem;
+  font-weight: 700;
+}
+
+.authError {
+  position: absolute;
+  top: 100%;
+  right: max(24px, calc((100% - 1320px) / 2));
+  padding: 9px 12px;
+  border: 1px solid #f1c8c3;
+  border-radius: 9px;
+  background: #fff1ef;
+  color: #983d35;
+  font-size: .72rem;
+}
+
 .signupButton {
   background: linear-gradient(135deg, #0d4ad7 0%, #0f3ba8 100%);
   color: white;
@@ -350,7 +371,8 @@
 
 .locationButton:hover,
 .loginButton:hover,
-.signupButton:hover {
+.signupButton:hover,
+.accountLink:hover {
   transform: translateY(-1px);
 }
 
