@@ -56,11 +56,11 @@ function CheckIcon() {
 }
 
 export default function ServiceGuidePage({ guide }: ServiceGuidePageProps) {
-  const serviceCardsLinkToProviders = guide.slug === "plumbing" || guide.slug === "electrical";
   const hasProviders = serviceProviders.some((item) => item.category === guide.category);
   const providerHref = hasProviders
     ? `/service-providers?service=${encodeURIComponent(guide.category)}`
     : "/service-providers";
+  const bookingHref = `/bookings?category=${encodeURIComponent(guide.category)}`;
 
   return (
     <div className={styles.page}>
@@ -78,7 +78,7 @@ export default function ServiceGuidePage({ guide }: ServiceGuidePageProps) {
               <p>{guide.intro}</p>
               <div className={styles.heroActions}>
                 <Link className={styles.primaryButton} href={providerHref}>Explore providers <span aria-hidden="true">→</span></Link>
-                <a className={styles.secondaryButton} href={`mailto:support@kardofix.com?subject=${encodeURIComponent(`Request ${guide.category} service`)}`}>Ask our team</a>
+                <Link className={styles.secondaryButton} href={bookingHref}>Request this service</Link>
               </div>
               <div className={styles.previewNote}>
                 <span aria-hidden="true">i</span>
@@ -112,7 +112,7 @@ export default function ServiceGuidePage({ guide }: ServiceGuidePageProps) {
           </div>
           <div className={styles.offerGrid}>
             {guide.offerings.map((offering, index) => {
-              const providerHref = `/service-providers?service=${encodeURIComponent(offering.name)}`;
+              const providerHref = `/service-providers?service=${encodeURIComponent(offering.name)}&category=${encodeURIComponent(guide.category)}`;
               const cardContent = (
                 <>
                   <div className={styles.offerIcon} aria-hidden="true"><span>{String(index + 1).padStart(2, "0")}</span><SparkIcon /></div>
@@ -120,16 +120,12 @@ export default function ServiceGuidePage({ guide }: ServiceGuidePageProps) {
                   <p>{offering.description}</p>
                   <div className={styles.offerBottom}>
                     <span>Sample estimate from <strong>₹{offering.startingPrice.toLocaleString("en-IN")}</strong></span>
-                    {serviceCardsLinkToProviders ? (
-                      <span className={styles.offerExplore}>Explore <span aria-hidden="true">→</span></span>
-                    ) : (
-                      <Link href={providerHref} aria-label={`Find providers for ${offering.name}`}>Explore <span aria-hidden="true">→</span></Link>
-                    )}
+                    <span className={styles.offerExplore}>Explore <span aria-hidden="true">→</span></span>
                   </div>
                 </>
               );
 
-              return serviceCardsLinkToProviders ? (
+              return (
                 <Link
                   className={`${styles.offerCard} ${styles.offerCardLink}`}
                   href={providerHref}
@@ -138,10 +134,6 @@ export default function ServiceGuidePage({ guide }: ServiceGuidePageProps) {
                 >
                   {cardContent}
                 </Link>
-              ) : (
-                <article className={styles.offerCard} key={offering.name}>
-                  {cardContent}
-                </article>
               );
             })}
           </div>

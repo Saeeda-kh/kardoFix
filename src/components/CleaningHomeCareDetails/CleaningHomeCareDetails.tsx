@@ -128,7 +128,7 @@ export default function CleaningHomeCareDetails() {
             {cleaningServices.map((service) => (
               <Link
                 className={`${styles.serviceCard} ${styles.serviceCardLink}`}
-                href={`/service-providers?service=${encodeURIComponent(service.title)}`}
+                href={`/service-providers?service=${encodeURIComponent(service.title)}&category=${encodeURIComponent("Cleaning & Home Care")}`}
                 key={service.title}
                 aria-label={`Find providers for ${service.title}`}
               >

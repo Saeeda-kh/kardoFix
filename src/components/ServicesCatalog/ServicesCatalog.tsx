@@ -390,6 +390,7 @@ export default function ServicesCatalog() {
               {visibleServices.length > 0 ? (
                 <div className={styles.serviceGrid}>
                   {visibleServices.map((service) => {
+                    const category = serviceCategories.find(({ label }) => label === service.category);
                     const cardContent = (
                       <>
                         <div className={`${styles.serviceIcon} ${styles[`icon-${service.icon}`]}`}>
@@ -397,51 +398,27 @@ export default function ServicesCatalog() {
                         </div>
                         <h3>{service.category}</h3>
                         <p>{service.description}</p>
-                        {service.category === "Cleaning & Home Care" || service.category === "Plumbing" || service.category === "Electrical" || service.category === "Home Tutor" || service.category === "Home Maid" || service.category === "Cooking Services" || service.category === "Nursing Services" ? (
-                          <span className={styles.cardAction}>
-                            {service.category === "Home Tutor"
-                              ? "Explore Tutors"
-                              : service.category === "Nursing Services"
-                                ? "Explore Nurses"
+                        <span className={styles.cardAction}>
+                          {service.category === "Home Tutor"
+                            ? "Explore Tutors"
+                            : service.category === "Nursing Services"
+                              ? "Explore Nurses"
                               : `Explore ${service.count} Services`} <span aria-hidden="true">→</span>
-                          </span>
-                        ) : (
-                          <a href={`mailto:support@kardofix.com?subject=${encodeURIComponent(service.category)}`}>
-                            {service.count} Services <span aria-hidden="true">→</span>
-                          </a>
-                        )}
+                        </span>
                       </>
                     );
-                    const cardId = serviceCategories.find(({ label }) => label === service.category)?.slug;
+                    const cardId = category?.slug;
 
-                    return service.category === "Cleaning & Home Care" || service.category === "Plumbing" || service.category === "Electrical" || service.category === "Home Tutor" || service.category === "Home Maid" || service.category === "Cooking Services" || service.category === "Nursing Services" ? (
+                    return (
                       <Link
                         className={`${styles.serviceCard} ${styles.serviceCardLink}`}
-                        href={
-                          service.category === "Plumbing"
-                            ? "/services/plumbing"
-                            : service.category === "Electrical"
-                              ? "/services/electrical"
-                              : service.category === "Home Tutor"
-                              ? "/service-providers?service=Home%20Tutor"
-                              : service.category === "Home Maid"
-                                ? "/service-providers?service=Home%20Maid"
-                                : service.category === "Cooking Services"
-                                  ? "/service-providers?service=Cooking%20Services"
-                                  : service.category === "Nursing Services"
-                                    ? "/service-providers?service=Nursing%20Services"
-                                    : "/services/cleaning-home-care"
-                        }
+                        href={category?.href ?? `/service-providers?service=${encodeURIComponent(service.category)}`}
                         id={cardId}
                         key={service.category}
                         aria-label={`Explore ${service.category} services`}
                       >
                         {cardContent}
                       </Link>
-                    ) : (
-                      <article className={styles.serviceCard} id={cardId} key={service.category}>
-                        {cardContent}
-                      </article>
                     );
                   })}
                 </div>

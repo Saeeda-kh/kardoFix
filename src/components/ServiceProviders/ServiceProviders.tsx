@@ -8,10 +8,13 @@ import {
   tutorLevels,
   type TutorLevel,
 } from "@/data/serviceProviders";
+import { serviceCategories } from "@/data/serviceCategories";
+import { serviceGuides } from "@/data/serviceGuides";
 import styles from "./ServiceProviders.module.scss";
 
 type ServiceProvidersProps = {
   initialService: string;
+  initialCategory: string;
 };
 
 function SearchIcon() {
@@ -89,13 +92,15 @@ function ProviderPortrait({ name, index }: { name: string; index: number }) {
   );
 }
 
-export default function ServiceProviders({ initialService }: ServiceProvidersProps) {
+export default function ServiceProviders({ initialService, initialCategory }: ServiceProvidersProps) {
   const [serviceQuery, setServiceQuery] = useState(initialService);
   const [isServiceListOpen, setIsServiceListOpen] = useState(false);
   const [activeServiceOption, setActiveServiceOption] = useState(0);
   const [selectedTutorLevel, setSelectedTutorLevel] = useState<TutorLevel | "All levels">("All levels");
   const [onlineOnly, setOnlineOnly] = useState(false);
   const normalizedQuery = serviceQuery.trim().toLocaleLowerCase();
+  const normalizedCategory = initialCategory.trim().toLocaleLowerCase();
+  const normalizedInitialService = initialService.trim().toLocaleLowerCase();
   const isTutorSearch = normalizedQuery.includes("tutor");
   const serviceOptions = useMemo(
     () => Array.from(new Set(serviceProviders.flatMap((provider) => provider.services))),
@@ -110,35 +115,57 @@ export default function ServiceProviders({ initialService }: ServiceProvidersPro
   );
 
   const filteredProviders = useMemo(() => {
-    return serviceProviders.filter((provider) => {
-      const matchesQuery =
-        !normalizedQuery ||
-        provider.category.toLocaleLowerCase().includes(normalizedQuery) ||
-        provider.services.some((service) => service.toLocaleLowerCase().includes(normalizedQuery));
+    const categoryProviders = serviceProviders.filter((provider) =>
+      !normalizedCategory || provider.category.toLocaleLowerCase() === normalizedCategory,
+    );
+    let matchingProviders = categoryProviders.filter((provider) =>
+      !normalizedQuery ||
+      provider.category.toLocaleLowerCase().includes(normalizedQuery) ||
+      provider.services.some((service) => service.toLocaleLowerCase().includes(normalizedQuery)),
+    );
+
+    if (
+      matchingProviders.length === 0 &&
+      normalizedCategory &&
+      normalizedQuery === normalizedInitialService
+    ) {
+      matchingProviders = categoryProviders;
+    }
+
+    return matchingProviders.filter((provider) => {
       const matchesTutorLevel =
         !isTutorSearch ||
         selectedTutorLevel === "All levels" ||
         provider.tutorLevels?.includes(selectedTutorLevel);
       const matchesOnline =
         !isTutorSearch || !onlineOnly || provider.onlineClasses === true;
-      return matchesQuery && matchesTutorLevel && matchesOnline;
+      return matchesTutorLevel && matchesOnline;
     });
   }, [
     isTutorSearch,
     normalizedQuery,
+    normalizedCategory,
+    normalizedInitialService,
     onlineOnly,
     selectedTutorLevel,
   ]);
 
-  const activeService = normalizedQuery === "home tutor"
-    ? "Home Tutor"
-    : normalizedQuery === "home maid"
-      ? "Home Maid"
-      : normalizedQuery === "cooking services"
-        ? "Cooking Services"
-        : normalizedQuery === "nursing services"
-          ? "Nursing Services"
-        : cleaningServiceNames.find((service) => service.toLocaleLowerCase() === normalizedQuery);
+  const initialServiceMatches =
+    Boolean(normalizedCategory && normalizedQuery === normalizedInitialService) &&
+    !serviceProviders.some(
+      (provider) =>
+        provider.category.toLocaleLowerCase() === normalizedCategory &&
+        provider.services.some((service) => service.toLocaleLowerCase().includes(normalizedQuery)),
+    );
+  const activeService =
+    serviceCategories.find(({ label }) => label.toLocaleLowerCase() === normalizedQuery)?.label ??
+    cleaningServiceNames.find((service) => service.toLocaleLowerCase() === normalizedQuery) ??
+    serviceGuides
+      .flatMap((guide) => guide.offerings)
+      .find((offering) => offering.name.toLocaleLowerCase() === normalizedQuery)?.name;
+  const isServiceCategoryQuery = serviceCategories.some(
+    ({ label }) => label.toLocaleLowerCase() === normalizedQuery,
+  );
 
   return (
     <div className={styles.page}>
@@ -270,7 +297,13 @@ export default function ServiceProviders({ initialService }: ServiceProvidersPro
             )}
             <p className={styles.searchHint}>
               {filteredProviders.length} {filteredProviders.length === 1 ? "provider" : "providers"}
-              {activeService ? ` offer ${activeService}` : normalizedQuery ? ` match “${serviceQuery.trim()}”` : " across our service categories"}
+              {initialServiceMatches
+                ? ` in ${initialCategory}`
+                : activeService
+                ? `${isServiceCategoryQuery ? " in " : " offer "}${activeService}`
+                  : normalizedQuery
+                    ? ` match “${serviceQuery.trim()}”`
+                    : " across our service categories"}
             </p>
           </form>
         </div>

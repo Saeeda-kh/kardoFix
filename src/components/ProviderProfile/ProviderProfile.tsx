@@ -51,11 +51,7 @@ function ProviderPortrait({ name }: { name: string }) {
 }
 
 export default function ProviderProfile({ provider }: ProviderProfileProps) {
-  const requestSubject = encodeURIComponent(`Service request for ${provider.name}`);
-  const requestBody = encodeURIComponent(
-    `Hello KardoFix, I would like to request ${provider.name} for ${provider.services[0] ?? "a service"}. Please help me arrange this service.`,
-  );
-  const contactHref = `mailto:support@kardofix.com?subject=${requestSubject}&body=${requestBody}`;
+  const bookingHref = `/bookings?provider=${encodeURIComponent(provider.id)}&category=${encodeURIComponent(provider.category)}&service=${encodeURIComponent(provider.services[0] ?? "")}`;
   const serviceArea = provider.location.includes(",") ? provider.location : `${provider.location}, Delhi, India`;
 
   return (
@@ -85,7 +81,7 @@ export default function ProviderProfile({ provider }: ProviderProfileProps) {
               </div>
             </div>
           </div>
-          <a className={styles.primaryButton} href={contactHref}>Request this provider <span aria-hidden="true">→</span></a>
+          <Link className={styles.primaryButton} href={bookingHref}>Request this provider <span aria-hidden="true">→</span></Link>
         </section>
 
         <section className={styles.stats} aria-label="Provider highlights">
@@ -102,7 +98,7 @@ export default function ProviderProfile({ provider }: ProviderProfileProps) {
               <p className={styles.aboutText}>{provider.description} Service details and availability can be confirmed when you send a request through KardoFix.</p>
               <div className={styles.detailGrid}>
                 <div><span>Experience</span><strong>{provider.experienceYears} years <small>(sample)</small></strong></div>
-                <div><span>Online booking</span><strong>Available through KardoFix</strong></div>
+                <div><span>Service request</span><strong>Available by email</strong></div>
                 <div><span>Completed tasks</span><strong>Not provided yet</strong></div>
                 <div><span>Response details</span><strong>Confirmed after request</strong></div>
               </div>
@@ -143,14 +139,14 @@ export default function ProviderProfile({ provider }: ProviderProfileProps) {
               <p className={styles.contactEyebrow}>STARTING FROM</p>
               <h2 className={styles.price}>₹{provider.startingPrice.toLocaleString("en-IN")}<small> / service</small></h2>
               <p className={styles.priceNote}>Final price depends on the service details and will be confirmed before booking.</p>
-              <a className={styles.primaryButton} href={contactHref}>Request a booking <span aria-hidden="true">→</span></a>
+              <Link className={styles.primaryButton} href={bookingHref}>Request a booking <span aria-hidden="true">→</span></Link>
               <div className={styles.contactDivider}><span>PROVIDER DETAILS</span></div>
               <dl className={styles.contactDetails}>
                 <div><dt>Business address</dt><dd><PinIcon />{serviceArea}<small>Service area only; exact business address not provided.</small></dd></div>
                 <div><dt>Contact number</dt><dd>Not shared publicly<small>Request contact through KardoFix.</small></dd></div>
-                <div><dt>Online requests</dt><dd>Available via KardoFix<small>Send a request and our team will follow up.</small></dd></div>
+                <div><dt>Service requests</dt><dd>Send by email<small>Availability and final pricing need confirmation.</small></dd></div>
               </dl>
-              <a className={styles.emailLink} href={contactHref}>Contact KardoFix support</a>
+              <Link className={styles.emailLink} href="/bookings">Contact KardoFix support</Link>
             </section>
             <p className={styles.safetyNote}><ShieldIcon /><span><strong>Book with confidence</strong><small>Confirm provider identity, scope, and final price before work begins.</small></span></p>
           </aside>

@@ -1,28 +1,32 @@
 import type { Metadata } from "next";
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
-import InfoPage from "@/components/InfoPage/InfoPage";
+import BookingExperience from "@/components/BookingExperience/BookingExperience";
 
 export const metadata: Metadata = {
-  title: "Bookings",
-  description: "Get help arranging a home service with KardoFix.",
+  title: "Request a Service",
+  description: "Create a service request and review it before emailing KardoFix.",
 };
 
-export default function BookingsPage() {
+type BookingsPageProps = {
+  searchParams: Promise<{ service?: string | string[]; category?: string | string[]; provider?: string | string[] }>;
+};
+
+function firstParam(value: string | string[] | undefined) {
+  return Array.isArray(value) ? value[0] ?? "" : value ?? "";
+}
+
+export default async function BookingsPage({ searchParams }: BookingsPageProps) {
+  const params = await searchParams;
+
   return (
     <>
       <Header />
-      <main>
-        <InfoPage
-          eyebrow="BOOKINGS"
-          title="Your service bookings, made simple."
-          description="Online booking management is not available yet. Browse our services or contact our team for help arranging a visit."
-          primaryLabel="Explore services"
-          primaryHref="/services"
-          secondaryLabel="Contact support"
-          secondaryHref="mailto:support@kardofix.com?subject=Booking%20help"
-        />
-      </main>
+      <main><BookingExperience
+        initialService={firstParam(params.service)}
+        initialCategory={firstParam(params.category)}
+        initialProviderId={firstParam(params.provider)}
+      /></main>
       <Footer />
     </>
   );

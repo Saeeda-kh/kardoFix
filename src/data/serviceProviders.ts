@@ -203,7 +203,7 @@ export const serviceProviders: ServiceProvider[] = [
     category: "Appliances Repair",
     location: "Delhi, India",
     description: "Home appliance technician for diagnosis, repair, and routine servicing.",
-    services: ["AC Repair", "Fridge Repair", "Washing Machine Repair", "Microwave Repair"],
+    services: ["Air conditioner repair", "Refrigerator repair", "Washing machine repair", "Microwave repair", "Water purifier service", "Geyser repair"],
     rating: 4.7,
     reviewCount: 103,
     experienceYears: 9,
