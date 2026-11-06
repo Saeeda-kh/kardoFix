@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 type ServiceProvidersPageProps = {
-  searchParams: Promise<{ service?: string | string[] }>;
+  searchParams: Promise<{ service?: string | string[]; category?: string | string[] }>;
 };
 
 function DirectoryFallback() {
@@ -18,15 +18,22 @@ function DirectoryFallback() {
 }
 
 export default async function ServiceProvidersPage({ searchParams }: ServiceProvidersPageProps) {
-  const serviceParam = (await searchParams).service;
+  const params = await searchParams;
+  const serviceParam = params.service;
+  const categoryParam = params.category;
   const initialService = Array.isArray(serviceParam) ? serviceParam[0] ?? "" : serviceParam ?? "";
+  const initialCategory = Array.isArray(categoryParam) ? categoryParam[0] ?? "" : categoryParam ?? "";
 
   return (
     <>
       <Header />
       <main>
         <Suspense fallback={<DirectoryFallback />}>
-          <ServiceProviders key={initialService} initialService={initialService} />
+          <ServiceProviders
+            key={`${initialService}:${initialCategory}`}
+            initialService={initialService}
+            initialCategory={initialCategory}
+          />
         </Suspense>
       </main>
       <Footer />

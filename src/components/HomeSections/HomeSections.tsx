@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { serviceCategories } from "@/data/serviceCategories";
 import styles from "./HomeSections.module.scss";
 
 const services = [
@@ -92,27 +93,32 @@ export default function HomeSections() {
               </>
             );
 
-            const serviceHref = icon === "tutor"
-              ? "/service-providers?service=Home%20Tutor"
-              : icon === "maid"
-                ? "/service-providers?service=Home%20Maid"
-                : icon === "cooking"
-                  ? "/service-providers?service=Cooking%20Services"
-                  : null;
+            const categoryName = icon === "ac"
+              ? "AC Services"
+              : icon === "plumbing"
+                ? "Plumbing"
+                : icon === "electrical"
+                  ? "Electrical"
+                  : icon === "maid"
+                    ? "Home Maid"
+                    : icon === "cooking"
+                      ? "Cooking Services"
+                      : icon === "painting"
+                        ? "Painting"
+                        : icon === "carpentry"
+                          ? "Carpentry & Furniture"
+                          : "Home Tutor";
+            const serviceHref = serviceCategories.find(({ label }) => label === categoryName)?.href;
 
-            return serviceHref ? (
+            return (
               <Link
                 className={styles.serviceCard}
-                href={serviceHref}
+                href={serviceHref ?? "/services"}
                 key={name}
                 aria-label={`Explore ${name}`}
               >
                 {cardContent}
               </Link>
-            ) : (
-              <article className={styles.serviceCard} key={name}>
-                {cardContent}
-              </article>
             );
           })}
         </div>
