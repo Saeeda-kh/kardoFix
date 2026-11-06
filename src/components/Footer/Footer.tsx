@@ -1,8 +1,6 @@
 import Link from "next/link";
-import { serviceCategories } from "@/data/serviceCategories";
+import { getServiceCategories } from "@/lib/marketplace";
 import styles from "./Footer.module.scss";
-
-const services = serviceCategories.slice(0, 6);
 
 const socials = [
   { name: "Instagram", href: "https://www.instagram.com/", icon: <path d="M7 2.8h10A4.2 4.2 0 0 1 21.2 7v10a4.2 4.2 0 0 1-4.2 4.2H7A4.2 4.2 0 0 1 2.8 17V7A4.2 4.2 0 0 1 7 2.8Zm0 2A2.2 2.2 0 0 0 4.8 7v10A2.2 2.2 0 0 0 7 19.2h10a2.2 2.2 0 0 0 2.2-2.2V7A2.2 2.2 0 0 0 17 4.8H7Zm5 2.1a5.1 5.1 0 1 1 0 10.2 5.1 5.1 0 0 1 0-10.2Zm0 2a3.1 3.1 0 1 0 0 6.2 3.1 3.1 0 0 0 0-6.2Zm5.3-3.1a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4Z" /> },
@@ -11,7 +9,9 @@ const socials = [
   { name: "YouTube", href: "https://www.youtube.com/", icon: <path d="M21.6 7.2a2.8 2.8 0 0 0-2-2C17.9 4.7 12 4.7 12 4.7s-5.9 0-7.6.5a2.8 2.8 0 0 0-2 2A29 29 0 0 0 2 12a29 29 0 0 0 .4 4.8 2.8 2.8 0 0 0 2 2c1.7.5 7.6.5 7.6.5s5.9 0 7.6-.5a2.8 2.8 0 0 0 2-2A29 29 0 0 0 22 12a29 29 0 0 0-.4-4.8ZM10 15.4V8.6l5.8 3.4-5.8 3.4Z" /> },
 ];
 
-export default function Footer() {
+export default async function Footer() {
+  const services = (await getServiceCategories()).slice(0, 6);
+
   return (
     <footer className={styles.footer}>
       <div className={styles.inner}>

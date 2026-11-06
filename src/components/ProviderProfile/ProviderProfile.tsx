@@ -137,8 +137,16 @@ export default function ProviderProfile({ provider }: ProviderProfileProps) {
           <aside className={styles.sidebar} aria-label="Provider contact and pricing">
             <section className={styles.contactCard} aria-labelledby="contact-title">
               <p className={styles.contactEyebrow}>STARTING FROM</p>
-              <h2 className={styles.price}>₹{provider.startingPrice.toLocaleString("en-IN")}<small> / service</small></h2>
-              <p className={styles.priceNote}>Final price depends on the service details and will be confirmed before booking.</p>
+              <h2 className={styles.price}>
+                {provider.startingPrice === null
+                  ? "Price on request"
+                  : <>₹{provider.startingPrice.toLocaleString("en-IN")}<small> / service</small></>}
+              </h2>
+              <p className={styles.priceNote}>
+                {provider.startingPrice === null
+                  ? "Ask KardoFix to confirm an estimate for your service."
+                  : "Final price depends on the service details and will be confirmed before booking."}
+              </p>
               <Link className={styles.primaryButton} href={bookingHref}>Request a booking <span aria-hidden="true">→</span></Link>
               <div className={styles.contactDivider}><span>PROVIDER DETAILS</span></div>
               <dl className={styles.contactDetails}>

@@ -2,19 +2,15 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import {
-  cleaningServiceNames,
-  serviceProviders,
-  tutorLevels,
-  type TutorLevel,
-} from "@/data/serviceProviders";
-import { serviceCategories } from "@/data/serviceCategories";
-import { serviceGuides } from "@/data/serviceGuides";
+import type { MarketplaceOffering, MarketplaceProvider, ServiceCategory } from "@/data/marketplace";
 import styles from "./ServiceProviders.module.scss";
 
 type ServiceProvidersProps = {
   initialService: string;
   initialCategory: string;
+  providers: MarketplaceProvider[];
+  categories: ServiceCategory[];
+  offerings: MarketplaceOffering[];
 };
 
 function SearchIcon() {
@@ -52,10 +48,6 @@ const portraitPalettes = [
   { background: "#E5F1F7", skin: "#F0C09B", hair: "#79513C", clothing: "#487C99" },
 ] as const;
 
-function isTutorLevel(value: string): value is TutorLevel {
-  return tutorLevels.some((level) => level === value);
-}
-
 function ProviderPortrait({ name, index }: { name: string; index: number }) {
   const palette = portraitPalettes[index % portraitPalettes.length];
   const hairStyle = index % 3;
@@ -92,19 +84,26 @@ function ProviderPortrait({ name, index }: { name: string; index: number }) {
   );
 }
 
-export default function ServiceProviders({ initialService, initialCategory }: ServiceProvidersProps) {
+export default function ServiceProviders({
+  initialService,
+  initialCategory,
+  providers,
+  categories,
+  offerings,
+}: ServiceProvidersProps) {
   const [serviceQuery, setServiceQuery] = useState(initialService);
   const [isServiceListOpen, setIsServiceListOpen] = useState(false);
   const [activeServiceOption, setActiveServiceOption] = useState(0);
-  const [selectedTutorLevel, setSelectedTutorLevel] = useState<TutorLevel | "All levels">("All levels");
+  const [selectedTutorLevel, setSelectedTutorLevel] = useState("All levels");
   const [onlineOnly, setOnlineOnly] = useState(false);
   const normalizedQuery = serviceQuery.trim().toLocaleLowerCase();
   const normalizedCategory = initialCategory.trim().toLocaleLowerCase();
   const normalizedInitialService = initialService.trim().toLocaleLowerCase();
   const isTutorSearch = normalizedQuery.includes("tutor");
+  const tutorLevels = Array.from(new Set(providers.flatMap((provider) => provider.tutorLevels ?? [])));
   const serviceOptions = useMemo(
-    () => Array.from(new Set(serviceProviders.flatMap((provider) => provider.services))),
-    [],
+    () => Array.from(new Set([...providers.flatMap((provider) => provider.services), ...offerings.map(({ name }) => name)])),
+    [offerings, providers],
   );
   const matchingServiceOptions = useMemo(
     () =>
@@ -115,7 +114,7 @@ export default function ServiceProviders({ initialService, initialCategory }: Se
   );
 
   const filteredProviders = useMemo(() => {
-    const categoryProviders = serviceProviders.filter((provider) =>
+    const categoryProviders = providers.filter((provider) =>
       !normalizedCategory || provider.category.toLocaleLowerCase() === normalizedCategory,
     );
     let matchingProviders = categoryProviders.filter((provider) =>
@@ -136,7 +135,7 @@ export default function ServiceProviders({ initialService, initialCategory }: Se
       const matchesTutorLevel =
         !isTutorSearch ||
         selectedTutorLevel === "All levels" ||
-        provider.tutorLevels?.includes(selectedTutorLevel);
+        provider.tutorLevels?.some((level) => level === selectedTutorLevel);
       const matchesOnline =
         !isTutorSearch || !onlineOnly || provider.onlineClasses === true;
       return matchesTutorLevel && matchesOnline;
@@ -147,23 +146,21 @@ export default function ServiceProviders({ initialService, initialCategory }: Se
     normalizedCategory,
     normalizedInitialService,
     onlineOnly,
+    providers,
     selectedTutorLevel,
   ]);
 
   const initialServiceMatches =
     Boolean(normalizedCategory && normalizedQuery === normalizedInitialService) &&
-    !serviceProviders.some(
+    !providers.some(
       (provider) =>
         provider.category.toLocaleLowerCase() === normalizedCategory &&
         provider.services.some((service) => service.toLocaleLowerCase().includes(normalizedQuery)),
     );
   const activeService =
-    serviceCategories.find(({ label }) => label.toLocaleLowerCase() === normalizedQuery)?.label ??
-    cleaningServiceNames.find((service) => service.toLocaleLowerCase() === normalizedQuery) ??
-    serviceGuides
-      .flatMap((guide) => guide.offerings)
-      .find((offering) => offering.name.toLocaleLowerCase() === normalizedQuery)?.name;
-  const isServiceCategoryQuery = serviceCategories.some(
+    categories.find(({ label }) => label.toLocaleLowerCase() === normalizedQuery)?.label ??
+    offerings.find((offering) => offering.name.toLocaleLowerCase() === normalizedQuery)?.name;
+  const isServiceCategoryQuery = categories.some(
     ({ label }) => label.toLocaleLowerCase() === normalizedQuery,
   );
 
@@ -273,8 +270,7 @@ export default function ServiceProviders({ initialService, initialCategory }: Se
                   <select
                     value={selectedTutorLevel}
                     onChange={(event) => {
-                      const level = event.currentTarget.value;
-                      setSelectedTutorLevel(level === "All levels" || isTutorLevel(level) ? level : "All levels");
+                      setSelectedTutorLevel(event.currentTarget.value);
                     }}
                   >
                     <option value="All levels">All tutor types</option>
@@ -365,7 +361,7 @@ export default function ServiceProviders({ initialService, initialCategory }: Se
                   )}
                   <div className={styles.providerStats}>
                     <div><span>Experience</span><strong>{provider.experienceYears} years</strong></div>
-                    <div><span>Starting price</span><strong>₹{provider.startingPrice.toLocaleString("en-IN")}</strong></div>
+                    <div><span>Starting price</span><strong>{provider.startingPrice === null ? "On request" : `₹${provider.startingPrice.toLocaleString("en-IN")}`}</strong></div>
                   </div>
                   <p className={styles.offersLabel}>Services offered</p>
                   <ul className={styles.serviceTags}>

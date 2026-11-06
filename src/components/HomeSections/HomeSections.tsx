@@ -1,31 +1,14 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { serviceCategories } from "@/data/serviceCategories";
+import { getCustomerTestimonials, getHomeServiceCategories } from "@/lib/marketplace";
 import styles from "./HomeSections.module.scss";
-
-const services = [
-  ["ac", "AC Technician", "₹499"],
-  ["plumbing", "Plumber", "₹399"],
-  ["electrical", "Electrician", "₹299"],
-  ["maid", "Home Maid", "₹150"],
-  ["cooking", "Cooking Services", "₹1200"],
-  ["painting", "Painting", "₹999"],
-  ["carpentry", "Carpentry", "₹499"],
-  ["tutor", "Home Tutor", "₹500"],
-];
 
 const reasons = [
   ["♙", "Verified & Background Checked Pros", "All professionals are verified and experienced."],
   ["◇", "Transparent Pricing", "No hidden charges. What you see is what you pay."],
   ["◷", "On-time Service", "We value your time and ensure on-time service."],
   ["✥", "Satisfaction Guaranteed", "Not happy? We’ll make it right."],
-];
-
-const reviews = [
-  ["Rohit Sharma", "Delhi", "Booked AC service and the technician was on time, polite and did a great job. Highly recommended!"],
-  ["Pooja Verma", "Gurugram", "Very easy booking process and transparent pricing. The plumbing work was done perfectly."],
-  ["Ankit Malhotra", "Noida", "I use KardoFix for regular home cleaning. The team is professional and always does a fantastic job."],
 ];
 
 function ServiceIcon({ type }: { type: string }) {
@@ -48,7 +31,12 @@ function ServiceIcon({ type }: { type: string }) {
   );
 }
 
-export default function HomeSections() {
+export default async function HomeSections() {
+  const [services, reviews] = await Promise.all([
+    getHomeServiceCategories(),
+    getCustomerTestimonials(),
+  ]);
+
   return (
     <div className={styles.sections}>
       <section id="services" className={styles.services} aria-labelledby="services-title">
@@ -59,7 +47,8 @@ export default function HomeSections() {
           <Link href="/services">View all services <span aria-hidden="true">→</span></Link>
         </div>
         <div className={styles.serviceGrid}>
-          {services.map(([icon, name, price]) => {
+          {services.map(({ icon, homeTitle, homePrice, href }) => {
+            const name = homeTitle;
             const cardContent = (
               <>
                 {icon === "ac" || icon === "plumbing" || icon === "electrical" || icon === "cleaning" || icon === "painting" ? (
@@ -87,33 +76,16 @@ export default function HomeSections() {
                 )}
                 <div className={styles.serviceCardContent}>
                   <h3>{name}</h3>
-                  <small>Starting from</small>
-                  <strong>{price}</strong>
+                  <small>Sample estimate from</small>
+                  <strong>₹{homePrice.toLocaleString("en-IN")}</strong>
                 </div>
               </>
             );
 
-            const categoryName = icon === "ac"
-              ? "AC Services"
-              : icon === "plumbing"
-                ? "Plumbing"
-                : icon === "electrical"
-                  ? "Electrical"
-                  : icon === "maid"
-                    ? "Home Maid"
-                    : icon === "cooking"
-                      ? "Cooking Services"
-                      : icon === "painting"
-                        ? "Painting"
-                        : icon === "carpentry"
-                          ? "Carpentry & Furniture"
-                          : "Home Tutor";
-            const serviceHref = serviceCategories.find(({ label }) => label === categoryName)?.href;
-
             return (
               <Link
                 className={styles.serviceCard}
-                href={serviceHref ?? "/services"}
+                href={href}
                 key={name}
                 aria-label={`Explore ${name}`}
               >
@@ -139,10 +111,11 @@ export default function HomeSections() {
         <article className={styles.reviewPanel}>
           <div className={styles.panelHeading}>
             <h2>What Our Customers Say</h2>
+            {reviews.some(({ isSample }) => isSample) && <small>Preview testimonials</small>}
           </div>
           <div className={styles.reviewGrid}>
-            {reviews.map(([name, city, text]) => (
-              <blockquote key={name}>
+            {reviews.map(({ id, name, city, text }) => (
+              <blockquote key={id}>
                 <span className={styles.stars}>★★★★★</span>
                 <p>“{text}”</p>
                 <footer><strong>{name}</strong><small>{city}</small></footer>

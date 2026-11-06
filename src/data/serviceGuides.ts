@@ -1,7 +1,7 @@
 export type ServiceOffering = {
   name: string;
   description: string;
-  startingPrice: number;
+  startingPrice: number | null;
 };
 
 export type ServiceGuide = {

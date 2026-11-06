@@ -310,6 +310,13 @@
   font-size: 0.75rem;
 }
 
+.catalogNote {
+  margin: 10px 0 16px;
+  color: #78869a;
+  font-size: .72rem;
+  line-height: 1.5;
+}
+
 .serviceGrid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));

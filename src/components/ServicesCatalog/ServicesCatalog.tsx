@@ -2,37 +2,10 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { serviceCategories } from "@/data/serviceCategories";
+import type { ServiceCategory } from "@/data/marketplace";
 import styles from "./ServicesCatalog.module.scss";
 
-const categories = [
-  "All Categories",
-  ...serviceCategories.map(({ label }) => label),
-];
-
-const services = [
-  { category: "Cleaning & Home Care", description: "Home, kitchen, sofa, deep cleaning and more.", count: 6, icon: "cleaning" },
-  { category: "Plumbing", description: "Tap repair, pipe fitting, leak fixing and more.", count: 12, icon: "plumbing" },
-  { category: "Electrical", description: "Wiring, light installation, fan repair and more.", count: 15, icon: "electrical" },
-  { category: "Appliances Repair", description: "AC, fridge, washing machine, microwave and more.", count: 20, icon: "appliance" },
-  { category: "Carpentry & Furniture", description: "Custom furniture, repair, modular work and more.", count: 14, icon: "carpentry" },
-  { category: "Painting", description: "Home painting, wall texture, polish and more.", count: 11, icon: "painting" },
-  { category: "Pest Control", description: "Cockroach, termite, rodent control and more.", count: 10, icon: "pest" },
-  { category: "AC Services", description: "AC installation, repair, servicing and more.", count: 9, icon: "ac" },
-  { category: "Home Security", description: "CCTV installation, video door phone and more.", count: 8, icon: "security" },
-  { category: "Beauty & Wellness", description: "Salon at home, massage, makeup and more.", count: 16, icon: "beauty" },
-  { category: "Packers & Movers", description: "Home shifting, office shifting, packaging and more.", count: 7, icon: "moving" },
-  { category: "Events & Occasions", description: "Decor, catering, photography and more.", count: 9, icon: "events" },
-  { category: "Home Tutor", description: "Tutoring for kids, matriculation, senior studies, and Quran learning.", count: 4, icon: "tutor" },
-  { category: "Home Maid", description: "Reliable home help for everyday household tasks.", count: 3, icon: "maid" },
-  { category: "Cooking Services", description: "Find experienced home cooks and chefs for meals at home.", count: 3, icon: "cooking" },
-  { category: "Nursing Services", description: "Find qualified nursing professionals for attentive care at home.", count: 3, icon: "nursing" },
-  { category: "Other Services", description: "A range of additional home maintenance and support services.", count: 6, icon: "other" },
-];
-
-type ServiceIconName = (typeof services)[number]["icon"];
-
-function ServiceIcon({ name }: { name: ServiceIconName }) {
+function ServiceIcon({ name }: { name: string }) {
   const props = {
     viewBox: "0 0 64 64",
     className: styles.serviceIconIllustration,
@@ -278,23 +251,24 @@ function PinIcon() {
   );
 }
 
-export default function ServicesCatalog() {
+export default function ServicesCatalog({ serviceCategories }: { serviceCategories: ServiceCategory[] }) {
+  const categories = ["All Categories", ...serviceCategories.map(({ label }) => label)];
   const [activeCategory, setActiveCategory] = useState("All Categories");
   const [searchText, setSearchText] = useState("");
   const [sortOrder, setSortOrder] = useState("Popular");
 
   const visibleServices = useMemo(() => {
     const query = searchText.trim().toLowerCase();
-    const filtered = services.filter((service) => {
-      const matchesCategory = activeCategory === "All Categories" || service.category === activeCategory;
-      const matchesSearch = !query || `${service.category} ${service.description}`.toLowerCase().includes(query);
+    const filtered = serviceCategories.filter((service) => {
+      const matchesCategory = activeCategory === "All Categories" || service.label === activeCategory;
+      const matchesSearch = !query || `${service.label} ${service.description}`.toLowerCase().includes(query);
       return matchesCategory && matchesSearch;
     });
 
     return sortOrder === "A to Z"
-      ? [...filtered].sort((a, b) => a.category.localeCompare(b.category))
+      ? [...filtered].sort((a, b) => a.label.localeCompare(b.label))
       : filtered;
-  }, [activeCategory, searchText, sortOrder]);
+  }, [activeCategory, searchText, serviceCategories, sortOrder]);
 
   return (
     <div className={styles.page}>
@@ -387,35 +361,35 @@ export default function ServicesCatalog() {
                 </div>
                 <span>{visibleServices.length} categories</span>
               </div>
+              {serviceCategories.some(({ isSample }) => isSample) && (
+                <p className={styles.catalogNote}>Some category descriptions and service counts are sample preview content and should be confirmed.</p>
+              )}
               {visibleServices.length > 0 ? (
                 <div className={styles.serviceGrid}>
                   {visibleServices.map((service) => {
-                    const category = serviceCategories.find(({ label }) => label === service.category);
                     const cardContent = (
                       <>
                         <div className={`${styles.serviceIcon} ${styles[`icon-${service.icon}`]}`}>
                           <ServiceIcon name={service.icon} />
                         </div>
-                        <h3>{service.category}</h3>
+                        <h3>{service.label}</h3>
                         <p>{service.description}</p>
                         <span className={styles.cardAction}>
-                          {service.category === "Home Tutor"
+                          {service.label === "Home Tutor"
                             ? "Explore Tutors"
-                            : service.category === "Nursing Services"
+                            : service.label === "Nursing Services"
                               ? "Explore Nurses"
                               : `Explore ${service.count} Services`} <span aria-hidden="true">→</span>
                         </span>
                       </>
                     );
-                    const cardId = category?.slug;
-
                     return (
                       <Link
                         className={`${styles.serviceCard} ${styles.serviceCardLink}`}
-                        href={category?.href ?? `/service-providers?service=${encodeURIComponent(service.category)}`}
-                        id={cardId}
-                        key={service.category}
-                        aria-label={`Explore ${service.category} services`}
+                        href={service.href}
+                        id={service.slug}
+                        key={service.slug}
+                        aria-label={`Explore ${service.label} services`}
                       >
                         {cardContent}
                       </Link>
